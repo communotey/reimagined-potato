@@ -3,18 +3,18 @@
 import re #REEEEEEEEEEEEEEEEEEEEEEE
 
 def main():
-    f = open('output1.txt', 'r')
-    #f = open('shortTextFile.txt', 'r')
+    #f = open('output1.txt', 'r')
+    f = open('shortTextFile.txt', 'r')
     #f = open('testFile1.txt', 'r')
     content = f.readlines()
 
 
     for line in content:
         data = parseInput(line)
-        if (data.format is not None):
+        #if (data.format is not None):
 
     #Just printing the files
-            print str(typeTags) + "\t"*(3-len(typeTags)) + data.dateCreated + "\t" + originalTitle
+        #print str(typeTags) + "\t"*(3-len(typeTags)) + data.dateCreated + "\t" + filename
             
         
 def getFormat(filename):
@@ -32,6 +32,23 @@ def getMatType(filename):
     for tag in typeTagsRaw:
         return tag.lower()
 
+    
+    
+    #Tags as a NOTE
+    noteTag = re.search('note|lecture|review', filename, re.IGNORECASE)
+    if (noteTag is not None):
+        return "note"
+
+    #Tags as NOTE if contains 'chapter' but isn't already tagged as a QUIZ
+    chapterNoteTag = re.search('chapter|chap', filename, re.IGNORECASE)
+    if (chapterNoteTag is not None):
+        return "note"
+
+    #Tags as a CHEATSHEET
+    noteTag = re.search('cheat|crib|summary|formula', filename, re.IGNORECASE)
+    if (noteTag is not None):
+        return "cheatsheet"
+    
     #Tags as EXAM. FindAll exam would find 'example' and marks as EXAM
     examTag = re.search('exam', filename, re.IGNORECASE)
     if (examTag is not None):
@@ -42,35 +59,21 @@ def getMatType(filename):
     if (testTag is not None):
         return "test"
     
-    #Tags as a NOTE
-    noteTag = re.search('note|lecture|review', filename, re.IGNORECASE)
-    if (noteTag is not None):
-        return "note"
-
-    #Tags as NOTE if contains 'chapter' but isn't already tagged as a QUIZ
-    chapterNoteTag = re.search('chapter|chap', filename, re.IGNORECASE)
-    if ((chapterNoteTag is not None) and not('QUIZ' in allTypeTags) and not('NOTE' in allTypeTags)):
-        return "note"
-
-    #Tags as a CHEATSHEET
-    noteTag = re.search('cheat|crib|summary|formula', filename, re.IGNORECASE)
-    if (noteTag is not None):
-        return "cheatsheet"
-    
     # default is note
     return "note"
+
 
 def getSol(filename):
     # Tags as a SOLUTION
     solutionTag = re.search('solution|soln|answer', filename, re.IGNORECASE)
     if (solutionTag is not None):
-        return true
+        return True
     else:
-        return false
+        return False
 
 
-def getYear(originalTitle):
-    yearSearch = re.search('[0-9]{4}', originalTitle)
+def getYear(filename):
+    yearSearch = re.search('[0-9]{4}', filename)
     if (yearSearch is not None):
         return yearSearch.group()
     else:
@@ -80,13 +83,13 @@ def getSemester(filename):
     #FindAll to cover straight forward types that have consistent spelling
     tags = re.findall('winter|spring|summer|fall', filename, re.IGNORECASE)
     for tag in tags:
-        if (tag === "winter"):
+        if (tag == "winter"):
             return 0
-        elif (tag === "spring"):
+        elif (tag == "spring"):
             return 1
-        elif (tag === "summer"):
+        elif (tag == "summer"):
             return 2
-        elif (tag === "fall"):
+        elif (tag == "fall"):
             return 3
 
         
@@ -121,14 +124,15 @@ def parseInput(input):
     output['facilty'] = lineList[1]
     output['code'] = lineList[3]
 
-    # TODO: get format from Google Drive API
-    # output['format'] = getFormat(lineList[4])
-    output['format'] = 'link'
     
     # $Type $Volume? $YearCreated $Semester? v$Volume? $Solution?
     textArr = lineList[4].split('.')
     if (len(textArr)>1):
+        output['format'] = textArr[-1] #risky in the case that its a google doc with a '.' in the name
         textArr.pop()
+    else:
+        # TODO: get format from Google Drive API
+        output['format'] = 'google doc or similar' #if there is no '.' meaning no file extension in name meaning its a google doc or google word doc etc. could determine by js: document.getElementById("drive-active-item-info").innerText
 
     # in case for whatever reason there are multiple periods, convert to dashes
     text = "-".join(textArr)
@@ -140,16 +144,16 @@ def parseInput(input):
     output['solution'] = getSol(text)
     
     # TODO: change tests depending on the type
-    output['type'] = getMatType(text.pop(0))
-
-    year = getYear(originalTitle)
+    output['type'] = getMatType(text)
+    
+    year = getYear(text) #should it be text or words?
     
     output['semesterId'] = getSemester(text)
         
     output['S3OrginalLink'] = lineList[6]
 
+    #print output
+
     return output
 
 main()
-    
-        
