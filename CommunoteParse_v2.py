@@ -1,30 +1,41 @@
 #Spaghetti code by: David Cleave
 
-import re #REEEEEEEEEEEEEEEEEEEEEEE
+import re
+import json
+import urllib
 
 def main():
-    #f = open('output1.txt', 'r')
-    f = open('shortTextFile.txt', 'r')
-    #f = open('testFile1.txt', 'r')
+    f = open('input.txt', 'r')
+    #f = open('shortTextFile.txt', 'r')
     content = f.readlines()
-
-
+    
+    outfile = open('output.txt', 'w')
+    
     for line in content:
         data = parseInput(line)
-        #if (data.format is not None):
-
-    #Just printing the files
-        #print str(typeTags) + "\t"*(3-len(typeTags)) + data.dateCreated + "\t" + filename
-            
+        writeToFile(outfile, data)
+       
+    outfile.close     
         
-def getFormat(filename):
-    sections = re.split('.')
-    extension = sections[len(sections) - 1]
-
-    if (extension is not None):
-        return extension
+def getFormat(filename, fileID):
+    filenameArr = filename.split('.')
+    if (len(filenameArr) > 1): #if had at least one '.' and last part after the last '.' isn't longer than 4 char
+        extension = filenameArr[-1].lower()
+ 
     else:
-        return False
+        #extension = scrapeMetaData(fileID)
+        extension = 'unknown'
+        
+    return extension
+    
+#not being used
+def scrapeMetaData(fileID): #google doc docs don't have a mimeType
+    page = urllib.urlopen('https://drive.google.com/file/d/' + fileID)
+    html = page.read()
+    chunked = re.match(r'(mimeType)',html)
+    mimeType = re.search(r'([a-z]{1,}\\/[a-z]{1,})', chunked, re.IGNORECASE).group()
+    print mimeType
+    
 
 def getMatType(filename):
     #FindAll to cover straight forward types that have consistent spelling
@@ -32,8 +43,6 @@ def getMatType(filename):
     for tag in typeTagsRaw:
         return tag.lower()
 
-    
-    
     #Tags as a NOTE
     noteTag = re.search('note|lecture|review', filename, re.IGNORECASE)
     if (noteTag is not None):
@@ -91,7 +100,6 @@ def getSemester(filename):
             return 2
         elif (tag == "fall"):
             return 3
-
         
     return 0
 
@@ -115,45 +123,35 @@ def uploadS3():
     print 'boom'
 
 def parseInput(input):
-    
     output = {}
 
     lineList = re.split("\t", input)
     index = lineList[0]
+    text = lineList[4]
+    fileID = lineList[6].split('?id=')[1]
 
     output['facilty'] = lineList[1]
+    
     output['code'] = lineList[3]
 
+    output['format'] = getFormat(text, fileID)
     
-    # $Type $Volume? $YearCreated $Semester? v$Volume? $Solution?
-    textArr = lineList[4].split('.')
-    if (len(textArr)>1):
-        output['format'] = textArr[-1] #risky in the case that its a google doc with a '.' in the name
-        textArr.pop()
-    else:
-        # TODO: get format from Google Drive API
-        output['format'] = 'google doc or similar' #if there is no '.' meaning no file extension in name meaning its a google doc or google word doc etc. could determine by js: document.getElementById("drive-active-item-info").innerText
-
-    # in case for whatever reason there are multiple periods, convert to dashes
-    text = "-".join(textArr)
     output['description'] = text
-
-    # turn the remaining string into an array
-    words = text.split(' ')
 
     output['solution'] = getSol(text)
     
     # TODO: change tests depending on the type
     output['type'] = getMatType(text)
     
-    year = getYear(text) #should it be text or words?
+    output['year'] = getYear(text)
     
     output['semesterId'] = getSemester(text)
         
-    output['S3OrginalLink'] = lineList[6]
-
-    #print output
-
+    output['S3OrginalLink'] = lineList[6].replace('\n','')
+    
     return output
+
+def writeToFile(outfile, data):
+    outfile.write(json.dumps(data)+'\n'*2)
 
 main()
