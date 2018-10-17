@@ -12,21 +12,24 @@ def main():
     outfile = open('output.txt', 'w')
     
     for line in content:
+        line = line.rstrip() #remove trailing whitespace
         data = parseInput(line)
         writeToFile(outfile, data)
        
     outfile.close     
         
-def getFormat(filename, fileID):
+def getFormatAndDesc(filename, fileID):
     filenameArr = filename.split('.')
     if (len(filenameArr) > 1): #if had at least one '.' and last part after the last '.' isn't longer than 4 char
-        extension = filenameArr[-1].lower()
+        extension = filenameArr.pop(-1).lower()
+        description = '-'.join(filenameArr)
  
     else:
         #extension = scrapeMetaData(fileID)
         extension = 'unknown'
+        description = filename
         
-    return extension
+    return description, extension
     
 #not being used
 def scrapeMetaData(fileID): #google doc docs don't have a mimeType
@@ -129,14 +132,10 @@ def parseInput(input):
     index = lineList[0]
     text = lineList[4]
     fileID = lineList[6].split('?id=')[1]
-
-    output['facilty'] = lineList[1]
     
-    output['code'] = lineList[3]
+    output['code'] = lineList[1] + ' ' + lineList[3]
 
-    output['format'] = getFormat(text, fileID)
-    
-    output['description'] = text
+    output['description'], output['format'] = getFormatAndDesc(text, fileID)
 
     output['solution'] = getSol(text)
     
@@ -147,11 +146,12 @@ def parseInput(input):
     
     output['semesterId'] = getSemester(text)
         
-    output['S3OrginalLink'] = lineList[6].replace('\n','')
+    output['fileID'] = fileID
     
     return output
 
 def writeToFile(outfile, data):
-    outfile.write(json.dumps(data)+'\n'*2)
+    outfile.write(json.dumps(data))
+    outfile.write('\n')
 
 main()

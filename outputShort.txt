@@ -1,0 +1,5 @@
+{"code": "CHEM 1E03", "description": "Test 1 2008 Solutions", "format": "pdf", "solution": true, "year": "2008", "semesterId": 0, "type": "test", "fileID": "0BxW61uJyyN8TNmJUUHdOWDR5bDQ"}
+{"code": "CHEM 1E03", "description": "Test 1 2008", "format": "pdf", "solution": false, "year": "2008", "semesterId": 0, "type": "test", "fileID": "0BxW61uJyyN8TT1EwVzBydnNYYWc"}
+{"code": "ENG 1P03", "description": "Chapter 20 Notes (other)", "format": "docx", "solution": false, "year": "", "semesterId": 0, "type": "note", "fileID": "0BxW61uJyyN8TaV82MWtiZ2JQemM"}
+{"code": "ENG 1P03", "description": "Chapter 17 Notes", "format": "docx", "solution": false, "year": "", "semesterId": 0, "type": "note", "fileID": "0BxW61uJyyN8TRlZXa0E4OFowN0k"}
+{"code": "Econ 1B03", "description": "Test 2 Review 2011 Fall", "format": "ppt", "solution": false, "year": "2011", "semesterId": 0, "type": "note", "fileID": "0BxW61uJyyN8TNzdlOTNjMGEtODgzZi00MmFhLWIwN2QtOGZlZWM4MDk4ZGFj"}
