@@ -4,35 +4,60 @@ import json
 import os
 import requests
 
+#from __future__ import print_function
+from googleapiclient.discovery import build
+from httplib2 import Http
+from oauth2client import file, client, tools
 
-#Convert docx to google doc
+#could the problem be that it needs the file key to be included in the request?
+
 def googleDocify(OGfileID):
-    #get the key by scraping it from the webpage. easy.
-    #? use the OGfileId and the key to send a POST request to have it converted
-    #??? use the response to get the ID of the new google doc that's been created
+    #///START - quick start sample code///
+    
+    # If modifying these scopes, delete the file token.json.
+    SCOPES = 'https://www.googleapis.com/auth/drive'
 
-    #example ID of google doc
-    #1-Q7okxyMGocqpiy2BP_zyROJeh-AuMy2P4C7OUJnJwo
-    #example download link for ODT as used in previous code for downloading google docs:
-    #https://docs.google.com/document/export?format=odt&id=1-Q7okxyMGocqpiy2BP_zyROJeh-AuMy2P4C7OUJnJwo
+    """Shows basic usage of the Drive v3 API.
+    Prints the names and ids of the first 10 files the user has access to.
+    """
+    store = file.Storage('token.json')
+    creds = store.get()
+    if not creds or creds.invalid:
+        flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+        creds = tools.run_flow(flow, store)
+    service = build('drive', 'v3', http=creds.authorize(Http()))\
+              
+    # Call the Drive v3 API
+    results = service.files().list(
+        pageSize=10, fields="nextPageToken, files(id, name)").execute()
+    items = results.get('files', [])
 
-    key = 'AIzaSyDVQw45DwoYh632gvsP5vPDqEKvb-Ywnb8'
-    #reqURL = "https://clients6.google.com/drive/v2internal/files/" + OGfileID + "/copy
-    reqURL = "https://clients6.google.com/drive/v2internal/files/0BxW61uJyyN8TaV82MWtiZ2JQemM/copy"
+    if not items:
+        print('No files found.')
+    else:
+        print('Files:')
+        for item in items:
+            print(u'{0} ({1})'.format(item['name'], item['id']))
 
-    params = {'convert':'true', 'supportsTeamDrives':'true', 'fields':'id,kind,mimeType', 'key':key, 'alt':'json'} #is this right?
-    headers = dict(authorization = 'removed for security')
-    cookies = dict(__utma = 'removed for security'
+    #///END - quick start sample code///
+            
 
-    response = requests.post(reqURL, params=params, headers=headers, cookies=cookies)
-    print response.status_code
-    print
-    print response.request.headers
-    print
+    APIKey = ""
+    secret = ""
+    clientID = ""
+
+    reqURL = "https://www.googleapis.com/drive/v2/files/" + OGfileID + "/copy"
+    params = {"convert":"true", "supportsTeamDrives":"true", "fields":"id,kind,mimeType", "alt":"json", "key":APIKey}   
+    
+    response = requests.post(reqURL, params=params)
+                   
     print response.text
 
+    #get ID from response
+    #return ID from the response
+
     
-    
+#test with a docx file    
 googleDocify('0BxW61uJyyN8TaV82MWtiZ2JQemM')
 
 
@@ -72,6 +97,7 @@ def main():
             downloadLink = 'https://drive.google.com/uc?authuser=0&id=' + fileID + '&export=download'
         """
 
+        #temp use this as the downloadLink rather than the above code
         downloadLink = 'https://drive.google.com/uc?authuser=0&id=' + fileID + '&export=download'
         
         print downloadLink
