@@ -58,7 +58,7 @@ def googleDocify(OGfileID):
 
     
 #test with a docx file    
-#googleDocify('0BxW61uJyyN8TaV82MWtiZ2JQemM')
+googleDocify('0BxW61uJyyN8TaV82MWtiZ2JQemM')
 
 
  
@@ -84,11 +84,13 @@ def main():
         fileID = data["fileID"]
         fileDesc = data["description"]
         fileFormat = data["format"]
+
+        #TODO: there are a few files where fileFormat already == 'odt'. In this case it should be downloaded as is using dataFormat["format"] instead of trying to convert
+            
         downloadFormat = getDownloadFormat(fileFormat)
-        print downloadFormat
         
         """
-        if (downloadFormat == 'odt') or (downloadFormat == 'ods'):
+        if (downloadFormat == 'odt') or (downloadFormat == 'odp'):
             downloadLink = 'https://docs.google.com/document/export?format=' + downloadFormat + '&id=' + fileID + '&includes_info_params=true'
         else:
             downloadLink = 'https://drive.google.com/uc?authuser=0&id=' + fileID + '&export=download'
@@ -112,8 +114,8 @@ def getDownloadFormat(fileFormat):
         downloadFormat = 'odt'
         
     elif (fileFormat == 'ppt'):
-        downloadFormat = 'ods'
-
+        downloadFormat = 'odp'
+    
     else:
         downloadFormat = fileFormat
 

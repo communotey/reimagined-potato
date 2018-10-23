@@ -25,19 +25,31 @@ def getFormatAndDesc(filename, fileID):
         description = '-'.join(filenameArr)
  
     else:
-        #extension = scrapeMetaData(fileID)
-        extension = 'unknown'
+        extension = scrapeGDocType(fileID)
         description = filename
         
     return description, extension
     
-#not being used
-def scrapeMetaData(fileID): #google doc docs don't have a mimeType
+
+def scrapeGDocType(fileID): #google doc docs don't have a mimeType
     page = urllib.urlopen('https://drive.google.com/file/d/' + fileID)
     html = page.read()
-    chunked = re.match(r'(mimeType)',html)
-    mimeType = re.search(r'([a-z]{1,}\\/[a-z]{1,})', chunked, re.IGNORECASE).group()
-    print mimeType
+    
+    odtTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/DocumentObject\")', html)
+    if (odtTag is not None):
+        return "odt"
+
+    odpTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/PresentationObject\")', html)
+    if (odpTag is not None):
+        return "odp"
+
+    odsTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/SpreadsheetObject\")', html)
+    if (odsTag is not None):
+        return "ods"
+
+    return "unknown"
+        
+    
     
 
 def getMatType(filename):
@@ -47,18 +59,13 @@ def getMatType(filename):
         return tag.lower()
 
     #Tags as a NOTE
-    noteTag = re.search('note|lecture|review', filename, re.IGNORECASE)
+    noteTag = re.search('note|lecture|review|chapter|chap', filename, re.IGNORECASE)
     if (noteTag is not None):
-        return "note"
-
-    #Tags as NOTE if contains 'chapter' but isn't already tagged as a QUIZ
-    chapterNoteTag = re.search('chapter|chap', filename, re.IGNORECASE)
-    if (chapterNoteTag is not None):
         return "note"
 
     #Tags as a CHEATSHEET
-    noteTag = re.search('cheat|crib|summary|formula', filename, re.IGNORECASE)
-    if (noteTag is not None):
+    cheatTag = re.search('cheat|crib|summary|formula', filename, re.IGNORECASE)
+    if (cheatTag is not None):
         return "cheatsheet"
     
     #Tags as EXAM. FindAll exam would find 'example' and marks as EXAM
@@ -95,6 +102,7 @@ def getSemester(filename):
     #FindAll to cover straight forward types that have consistent spelling
     tags = re.findall('winter|spring|summer|fall', filename, re.IGNORECASE)
     for tag in tags:
+        tag = tag.lower()
         if (tag == "winter"):
             return 0
         elif (tag == "spring"):
@@ -103,11 +111,14 @@ def getSemester(filename):
             return 2
         elif (tag == "fall"):
             return 3
-        
-    return 0
+    return ""
 
 def getVersion(filename):
-    tags = re.findAll('v([A-Z]+|\d+)', filename) #vA, v3, etc.
+    tags = re.findall('v([A-Z]|\d+)', filename) #vA, v3, etc.
+    for tag in tags:
+        if (tag is not None):
+            return tag
+    return ""
 
 def getDriveMetaData():
     file_id = '0BwwA4oUTeiV1UVNwOHItT0xfa2M'
@@ -139,12 +150,14 @@ def parseInput(input):
 
     output['solution'] = getSol(text)
     
-    # TODO: change tests depending on the type
+    # TODO: change tests depending on the type #what does this mean?
     output['type'] = getMatType(text)
     
     output['year'] = getYear(text)
     
     output['semesterId'] = getSemester(text)
+
+    output['version'] = getVersion(text)
         
     output['fileID'] = fileID
     
