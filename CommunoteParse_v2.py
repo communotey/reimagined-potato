@@ -1,5 +1,7 @@
 #Spaghetti code by: David Cleave
 
+#*unknowns are actually google docs and odt marked are docs with no "." while i wanted it to be the other way around
+
 import re
 import json
 import urllib
@@ -17,6 +19,7 @@ def main():
         writeToFile(outfile, data)
        
     outfile.close     
+    print "Done!"
         
 def getFormatAndDesc(filename, fileID):
     filenameArr = filename.split('.')
@@ -25,14 +28,16 @@ def getFormatAndDesc(filename, fileID):
         description = '-'.join(filenameArr)
  
     else:
-        extension = scrapeGDocType(fileID)
+        extension = scrapeGDocType(fileID) #TODO: there are some .doc files that don't have a '.' in the desc so thinks its a gdoc when its not
+        print "No dot for fileID: " + fileID + "\t marked as format: " + extension
         description = filename
+        
         
     return description, extension
     
 
-def scrapeGDocType(fileID): #google doc docs don't have a mimeType
-    page = urllib.urlopen('https://drive.google.com/file/d/' + fileID)
+def scrapeGDocType(fileID):
+    page = urllib.urlopen('https://docs.google.com/document/d/' + fileID)
     html = page.read()
     
     odtTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/DocumentObject\")', html)

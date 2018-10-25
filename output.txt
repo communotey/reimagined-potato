@@ -3,7 +3,7 @@
 {"code": "CHEM 1E03", "description": "Revision", "format": "docx", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8Tby04N2Y3V1ZjMW8"}
 {"code": "CHEM 1E03", "description": "Notes", "format": "doc", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TNlRWX1ZScWVuRjg"}
 {"code": "CHEM 1E03", "description": "chem notes", "format": "docx", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TWEcxcGZsQW11cDQ"}
-{"code": "CHEM 1E03", "description": "Chemistry", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1YymqOorsWAMlvRWSFljWDeeOVICF5LN1yDRk0hZjRL0"}
+{"code": "CHEM 1E03", "description": "Chemistry", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1YymqOorsWAMlvRWSFljWDeeOVICF5LN1yDRk0hZjRL0"}
 {"code": "CHEM 1E03", "description": "Chapter 8-rules", "format": "jpg", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TMWVvOVlpYmZHREE"}
 {"code": "CHEM 1E03", "description": "Chap 8 1-5 Chem", "format": "jpg", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TemhySV9ya1RmX0U"}
 {"code": "CHEM 1E03", "description": "Chap 8 4-5 Chem", "format": "jpg", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TdFRMbS12R0I2RG8"}
@@ -109,7 +109,7 @@
 {"code": "CHEM 1E03", "description": "Chapter-16", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TZWVhZjUzOWMtNmMxNS00ZmFkLThjYWQtMzI5ZGQwYmIzYTQz"}
 {"code": "CHEM 1E03", "description": "Chapter-15", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TNGM1MWMxZjQtZDY3OC00MjU3LWIzZGItZGFkZGU1NjFjODQw"}
 {"code": "CHEM 1E03", "description": "Chapter-10", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TMWFiZDZhNDctZDczNy00NDFmLTg3M2ItYWRmZDAyZTQ5NmU4"}
-{"code": "ENG 1P03", "description": "Mark-Suans-and-Justin-Faccas-1P03-Exam-Study-Sheet", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "exam", "fileID": "1WzNU2_auzn7Bv2GYF18AY08mx97lgFoOKWE9ZSi-lgs"}
+{"code": "ENG 1P03", "description": "Mark-Suans-and-Justin-Faccas-1P03-Exam-Study-Sheet", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "exam", "fileID": "1WzNU2_auzn7Bv2GYF18AY08mx97lgFoOKWE9ZSi-lgs"}
 {"code": "ENG 1P03", "description": "Engineering Design Textbook Notes", "format": "doc", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TNjAyYTRhYmQtNTcyYy00ZGZiLWJmYTQtMDBlYmFhMDg1MTFh"}
 {"code": "ENG 1P03", "description": "lecture notes September 2013", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TZHhMcnJMZjZSdk0"}
 {"code": "ENG 1P03", "description": "Chapter 20 Notes (other)", "format": "docx", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TaV82MWtiZ2JQemM"}
@@ -1517,7 +1517,6 @@
 {"code": "SFWR-ENG 2MX3", "description": "Tutorial 2014-03-18", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TU1ZBM2FrTHdnZ00"}
 {"code": "SFWR-ENG 2MX3", "description": "Tutorial 2014-03-11", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TZnljSkJDeDUtVzA"}
 {"code": "SFWR-ENG 2MX3", "description": "Tutorial 2014-01-14", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TeV82UVNWQVctczA"}
-{"code": "SFWR-ENG 2MX3", "description": "SFWR ENG 2MX3 Review Session Notes", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1eST_EOxSPlRC5E4bGfIs1GuvRPKLLKIXSE1vyly7JVo"}
 {"code": "SFWR-ENG 2MX3", "description": "study notes", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TZmF0SUNuZVQzemM"}
 {"code": "SFWR-ENG 2MX3", "description": "hulksmash cheatsheet", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "cheatsheet", "fileID": "0BxW61uJyyN8TU0lkbWNDallETkE"}
 {"code": "SFWR-ENG 2MX3", "description": "SFWR ENG 2MX3 Summary", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "cheatsheet", "fileID": "0BxW61uJyyN8TTWx5d0gzQW9ZUzQ"}
@@ -1594,7 +1593,6 @@
 {"code": "SFWR-ENG 2MX3", "description": "Jason 2013-01-11", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TLXJMLWMzbUV6WGs"}
 {"code": "SFWR-ENG 2MX3", "description": "Jason 2013-01-09", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TbHlRd3NCdEpORlU"}
 {"code": "SFWR-ENG 2MX3", "description": "Jason 2013-01-07", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TdGRKUlE1ekdlZ1k"}
-{"code": "SFWR-ENG 2MX3", "description": "slide 20 notes", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TODh3Vkp6ODc2dXM"}
 {"code": "SFWR-ENG 2MX3", "description": "lecture 21 slide 16 example page3", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TVFBhc0kwRDlRbGM"}
 {"code": "SFWR-ENG 2MX3", "description": "lecture 21 slide 16 example page2", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TZE1pdXE4SVN2VFk"}
 {"code": "SFWR-ENG 2MX3", "description": "lecture 21 slide 16 example page1", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TRG1YTzVBZEdGeVk"}
@@ -2019,7 +2017,7 @@
 {"code": "Math 2Z03", "description": "Lecture 3,4 - Chapter 3", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TUUZBRnZ0R0hpa28"}
 {"code": "Math 2Z03", "description": "Lecture 8", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TMlczUzE0bFlFSmM"}
 {"code": "Math 2Z03", "description": "Lecture 9", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TUGU5LTFhbGszVE0"}
-{"code": "Math 2Z03", "description": "Test 2 2Z03 Sample A Solutions (EDITABLE!)", "format": "unknown", "solution": true, "version": "", "year": "", "semesterId": "", "type": "test", "fileID": "1kazgp-9XNgKHn7halhx4UArPwkQ3quJqP5vf-_m6FCQ"}
+{"code": "Math 2Z03", "description": "Test 2 2Z03 Sample A Solutions (EDITABLE!)", "format": "odt", "solution": true, "version": "", "year": "", "semesterId": "", "type": "test", "fileID": "1kazgp-9XNgKHn7halhx4UArPwkQ3quJqP5vf-_m6FCQ"}
 {"code": "Math 2Z03", "description": "Test 2 2012 Solutions", "format": "pdf", "solution": true, "version": "", "year": "2012", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TZC1WbDVNMHpfTlk"}
 {"code": "Math 2Z03", "description": "Test 2 2002 Solutions", "format": "pdf", "solution": true, "version": "", "year": "2002", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TenhNZGRmczEwYUk"}
 {"code": "Math 2Z03", "description": "Test 2 2C03 2012 Solutions", "format": "pdf", "solution": true, "version": "", "year": "2012", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TekU3YktQcXNBUlk"}
@@ -2074,7 +2072,7 @@
 {"code": "SFWR-ENG 2C03", "description": "Tutorial 2014-01-23", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TX0ZyUS1JbFFXRW8"}
 {"code": "SFWR-ENG 2C03", "description": "Tutorial 2014-02-27", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TLUNMVEw0ZHVxa2M"}
 {"code": "SFWR-ENG 2C03", "description": "Tutorial 2014-02-06", "format": "pdf", "solution": false, "version": "", "year": "2014", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TYWR5RTByXzFnd1E"}
-{"code": "SFWR-ENG 2C03", "description": "CS/SE 2C03 Review", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1zoI4TDaLtklbrcPbhFbLHf8OwE0as7a_GnWIsUAdnqI"}
+{"code": "SFWR-ENG 2C03", "description": "CS/SE 2C03 Review", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1zoI4TDaLtklbrcPbhFbLHf8OwE0as7a_GnWIsUAdnqI"}
 {"code": "SFWR-ENG 2C03", "description": "depthfirstsearch", "format": "gif", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TSTFGQ2JiNVJyM1U"}
 {"code": "SFWR-ENG 2C03", "description": "breadthfirstsearch", "format": "gif", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TZWZob0doVFk5bE0"}
 {"code": "SFWR-ENG 2C03", "description": "All assignments", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "assignment", "fileID": "0BxW61uJyyN8TS09PU1pXeGVJeGc"}
@@ -2097,7 +2095,6 @@
 {"code": "SFWR-ENG 2AA4", "description": "Tutorial 2013-01-22", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TN2hsWjZDVGp5QUU"}
 {"code": "SFWR-ENG 2AA4", "description": "Tutorial 2013-02-26", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "tutorial", "fileID": "0BxW61uJyyN8TMUVBSllrbC0tVlk"}
 {"code": "SFWR-ENG 2FA3", "description": "SFWR ENG 2FA3 Assignment Questions", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "assignment", "fileID": "0BxW61uJyyN8TSmQ0LWJwejlyRGc"}
-{"code": "SFWR-ENG 2FA3", "description": "SFWR ENG 2FA3 Review Notes", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "12b0YsgYtB3cnhiu39eKqpl6b2guSE04wUk4Gg8G9nt4"}
 {"code": "SFWR-ENG 2FA3", "description": "Lecture 2013-02-06", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TbnlUelV3WEFDRjg"}
 {"code": "SFWR-ENG 2FA3", "description": "Midterm full solutions", "format": "pdf", "solution": true, "version": "", "year": "", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TbWtKQzZWWXl1SDQ"}
 {"code": "SFWR-ENG 2FA3", "description": "Lecture 2013-03-01", "format": "pdf", "solution": false, "version": "", "year": "2013", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TaElqR2pCcWZ6S3M"}
@@ -2921,7 +2918,7 @@
 {"code": "Stats 3Y03", "description": "Test 1 2012 Solutions", "format": "pdf", "solution": true, "version": "", "year": "2012", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TR1c1Q092SEpNYzQ"}
 {"code": "Stats 3Y03", "description": "Test 1 2010 Sample", "format": "pdf", "solution": false, "version": "", "year": "2010", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TYWU3MlF0UEJ0ZUE"}
 {"code": "Stats 3Y03", "description": "Test 1 2010 Sample Solutions", "format": "pdf", "solution": true, "version": "", "year": "2010", "semesterId": "", "type": "test", "fileID": "0BxW61uJyyN8TZVkxczhYaDJWRGM"}
-{"code": "ENG 3N03", "description": "ENGINEER 3N03 Notes All", "format": "unknown", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "117z1qGbrDJJV9bx57CQ4SxEL8Ws8oL27bM7-NgFHNKU"}
+{"code": "ENG 3N03", "description": "ENGINEER 3N03 Notes All", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "117z1qGbrDJJV9bx57CQ4SxEL8Ws8oL27bM7-NgFHNKU"}
 {"code": "ENG 3N03", "description": "cheatsheet", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "cheatsheet", "fileID": "0BxW61uJyyN8TUWo2aUJuaVh3dTA"}
 {"code": "ENG 3N03", "description": "Exam contents", "format": "pdf", "solution": false, "version": "", "year": "", "semesterId": "", "type": "exam", "fileID": "0BxW61uJyyN8TVWp1d09kcHZ5LVk"}
 {"code": "ENG 3N03", "description": "Quiz 3 2012 Solution", "format": "pdf", "solution": true, "version": "", "year": "2012", "semesterId": "", "type": "quiz", "fileID": "0BxW61uJyyN8TRUFEVGZtSW4yLWM"}

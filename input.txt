@@ -1517,7 +1517,6 @@
 1517	SFWR-ENG		2MX3	Tutorial 2014-03-18.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TU1ZBM2FrTHdnZ00
 1518	SFWR-ENG		2MX3	Tutorial 2014-03-11.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TZnljSkJDeDUtVzA
 1519	SFWR-ENG		2MX3	Tutorial 2014-01-14.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TeV82UVNWQVctczA
-1520	SFWR-ENG		2MX3	SFWR ENG 2MX3 Review Session Notes		https://docs.google.com/open?id=1eST_EOxSPlRC5E4bGfIs1GuvRPKLLKIXSE1vyly7JVo
 1521	SFWR-ENG		2MX3	study notes.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TZmF0SUNuZVQzemM
 1522	SFWR-ENG		2MX3	hulksmash cheatsheet.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TU0lkbWNDallETkE
 1523	SFWR-ENG		2MX3	SFWR ENG 2MX3 Summary.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TTWx5d0gzQW9ZUzQ
@@ -1594,7 +1593,6 @@
 1594	SFWR-ENG		2MX3	Jason 2013-01-11.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TLXJMLWMzbUV6WGs
 1595	SFWR-ENG		2MX3	Jason 2013-01-09.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TbHlRd3NCdEpORlU
 1596	SFWR-ENG		2MX3	Jason 2013-01-07.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TdGRKUlE1ekdlZ1k
-1597	SFWR-ENG		2MX3	slide 20 notes.odt		https://docs.google.com/open?id=0BxW61uJyyN8TODh3Vkp6ODc2dXM
 1598	SFWR-ENG		2MX3	lecture 21 slide 16 example page3.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TVFBhc0kwRDlRbGM
 1599	SFWR-ENG		2MX3	lecture 21 slide 16 example page2.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TZE1pdXE4SVN2VFk
 1600	SFWR-ENG		2MX3	lecture 21 slide 16 example page1.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TRG1YTzVBZEdGeVk
@@ -2097,7 +2095,6 @@
 2097	SFWR-ENG		2AA4	Tutorial 2013-01-22.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TN2hsWjZDVGp5QUU
 2098	SFWR-ENG		2AA4	Tutorial 2013-02-26.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TMUVBSllrbC0tVlk
 2099	SFWR-ENG		2FA3	SFWR ENG 2FA3 Assignment Questions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TSmQ0LWJwejlyRGc
-2100	SFWR-ENG		2FA3	SFWR ENG 2FA3 Review Notes		https://docs.google.com/open?id=12b0YsgYtB3cnhiu39eKqpl6b2guSE04wUk4Gg8G9nt4
 2101	SFWR-ENG		2FA3	Lecture 2013-02-06.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TbnlUelV3WEFDRjg
 2102	SFWR-ENG		2FA3	Midterm full solutions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TbWtKQzZWWXl1SDQ
 2103	SFWR-ENG		2FA3	Lecture 2013-03-01.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TaElqR2pCcWZ6S3M

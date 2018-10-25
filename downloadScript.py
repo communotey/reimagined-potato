@@ -2,77 +2,20 @@
 import urllib2
 import json
 import os
+import io
 import requests
-
-#from __future__ import print_function
-from googleapiclient.discovery import build
-from httplib2 import Http
-from oauth2client import file, client, tools
-
-#could the problem be that it needs the file key to be included in the request?
-
-def googleDocify(OGfileID):
-    #///START - quick start sample code///
-    
-    # If modifying these scopes, delete the file token.json.
-    SCOPES = 'https://www.googleapis.com/auth/drive'
-
-    """Shows basic usage of the Drive v3 API.
-    Prints the names and ids of the first 10 files the user has access to.
-    """
-    store = file.Storage('token.json')
-    creds = store.get()
-    if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
-        creds = tools.run_flow(flow, store)
-    service = build('drive', 'v3', http=creds.authorize(Http()))\
-              
-    # Call the Drive v3 API
-    results = service.files().list(
-        pageSize=10, fields="nextPageToken, files(id, name)").execute()
-    items = results.get('files', [])
-
-    if not items:
-        print('No files found.')
-    else:
-        print('Files:')
-        for item in items:
-            print(u'{0} ({1})'.format(item['name'], item['id']))
-
-    #///END - quick start sample code///
-            
-
-    APIKey = ""
-    secret = ""
-    clientID = ""
-
-    reqURL = "https://www.googleapis.com/drive/v2/files/" + OGfileID + "/copy"
-    params = {"convert":"true", "supportsTeamDrives":"true", "fields":"id,kind,mimeType", "alt":"json", "key":APIKey}   
-    
-    response = requests.post(reqURL, params=params)
-                   
-    print response.text
-
-    #get ID from response
-    #return ID from the response
-
-    
-#test with a docx file    
-googleDocify('0BxW61uJyyN8TaV82MWtiZ2JQemM')
+from google.oauth2 import service_account
+from apiclient import errors
+from apiclient.discovery import build
+from apiclient.http import MediaIoBaseDownload
 
 
- 
-
-    #https://drive.google.com/file/d/0BxW61uJyyN8TaV82MWtiZ2JQemM/view
-    #the download link isn't working for this one docx to odt
-    #can't download docx as ODT. need to open as google doc then can download but it assigns it a new ID for the google doc version
-    #can convert the document by getting the key from scraping _initProjector from https://drive.google.com/file/d/0BxW61uJyyN8TaV82MWtiZ2JQemM/view and then once have the key
-    #use POST: https://clients6.google.com/drive/v2internal/files/0BxW61uJyyN8TaV82MWtiZ2JQemM/copy?convert=true&supportsTeamDrives=true&fields=id,kind,mimeType&key=AIzaSyDVQw45DwoYh632gvsP5vPDqEKvb-Ywnb8&alt=json
-    #when clicking convert to google drive also has the request url: https://clients6.google.com/drive/v2internal/files/1qatRFo_F2roKK9oZ7EJ6Y3tB5MsJ-xXo78NFITDkxNA/authorize?&appId=619683526622&supportsTeamDrives=true&key=AIzaSyDVQw45DwoYh632gvsP5vPDqEKvb-Ywnb8
-    #which has the ID in the request url which is the ID of the google doc that it has been converted to. It's actually the 1qatRFo_... part thats after /files/...
-    #
-    
 def main():
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
+    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    service = build('drive', 'v2', credentials=credentials)
+
     #open and read output.txt
     #f = open('output.txt','r')
     dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
@@ -85,60 +28,67 @@ def main():
         fileDesc = data["description"]
         fileFormat = data["format"]
 
-        #TODO: there are a few files where fileFormat already == 'odt'. In this case it should be downloaded as is using dataFormat["format"] instead of trying to convert
+        #convert from doc or docx to google doc if needed
+        if (fileFormat == 'doc') or (fileFormat == 'docx'):
+            GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
+            fileID = GDoc['id'] #fileID of new GDoc
+            mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.odt' #directory for odt download
+            isGDoc = True
+
+        #TODO: odp download is 90% corrupt even when doing it manually without using the API. Could export as PDF instead maybe. or just keep as ppt
+        elif (fileFormat == 'ppt'):
+            GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
+            fileID = GDoc['id'] #fileID of new GDoc
+            mimeType = 'application/vnd.oasis.opendocument.presentation' #mimeType for odp 
+            #mimeType = 'application/pdf'
+            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.odp' #directory for odt download
+            isGDoc = True
             
-        downloadFormat = getDownloadFormat(fileFormat)
+        #else if already a google doc (doesn't need conversion)
+        elif (fileFormat == 'odt'):
+            mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.' + fileFormat
+            isGDoc = True
         
-        """
-        if (downloadFormat == 'odt') or (downloadFormat == 'odp'):
-            downloadLink = 'https://docs.google.com/document/export?format=' + downloadFormat + '&id=' + fileID + '&includes_info_params=true'
+        #else it is already a google doc or a different file type    
         else:
-            downloadLink = 'https://drive.google.com/uc?authuser=0&id=' + fileID + '&export=download'
-        """
+            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.' + fileFormat
+            mimeType = None #can you pass None for mime type if don't want to specify it?
+            isGDoc = False
 
-        #temp use this as the downloadLink rather than the above code
-        downloadLink = 'https://drive.google.com/uc?authuser=0&id=' + fileID + '&export=download'
-        
-        print downloadLink
-        
-        #check fileFormat then handle download differently if doc then odt or whatever
-        fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.' + fileFormat
-        print fileName
-        #From user: PabloG https://stackoverflow.com/questions/22676/how-do-i-download-a-file-over-http-using-python
-        downloadFile(downloadLink, fileName)
-        print 'done'
+        #Download File
+        exportFile(service, fileID, fileName, mimeType, isGDoc)   
 
 
-def getDownloadFormat(fileFormat):
-    if (fileFormat == 'doc') or (fileFormat == 'docx') or fileFormat == '':
-        downloadFormat = 'odt'
-        
-    elif (fileFormat == 'ppt'):
-        downloadFormat = 'odp'
-    
+
+def convertFile(service, origin_file_id, copy_title):
+  copied_file = {'title': copy_title}
+  try:
+    return service.files().copy(fileId=origin_file_id, body=copied_file, convert='true').execute()
+  except errors.HttpError, error:
+    print 'An error occurred: %s' % error
+  return None
+
+
+def exportFile(service, fileID, fileName, mimeType, isGDoc):
+    fh = io.FileIO(fileName, 'wb')
+    if (isGDoc):
+        request = service.files().export_media(fileId=fileID, mimeType=mimeType)
     else:
-        downloadFormat = fileFormat
-
-    return downloadFormat
-
-    
-def downloadFile(downloadLink, fileName):
-        u = urllib2.urlopen(downloadLink)
-        f = open(fileName, 'wb')
-
-        block_sz = 8192
-        while True:
-            buffer = u.read(block_sz)
-            if not buffer:
-                break
-            f.write(buffer)
-        f.close()
+        request = service.files().get_media(fileId=fileID)
+        
+    downloader = MediaIoBaseDownload(fh, request)
+    done = False
+    while done is False:
+        status, done = downloader.next_chunk()
+        print "Download %d%%." % int(status.progress() * 100)
 
 
 
 
 
-
+main()
 
 
 
