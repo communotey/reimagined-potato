@@ -29,9 +29,7 @@ def getFormatAndDesc(filename, fileID):
  
     else:
         extension = scrapeGDocType(fileID) #TODO: there are some .doc files that don't have a '.' in the desc so thinks its a gdoc when its not
-        print "No dot for fileID: " + fileID + "\t marked as format: " + extension
         description = filename
-        
         
     return description, extension
     
@@ -64,7 +62,7 @@ def getMatType(filename):
         return tag.lower()
 
     #Tags as a NOTE
-    noteTag = re.search('note|lecture|review|chapter|chap', filename, re.IGNORECASE)
+    noteTag = re.search('note|lecture|review|chapter|chap|ch|module|week', filename, re.IGNORECASE)
     if (noteTag is not None):
         return "note"
 
@@ -119,31 +117,31 @@ def getSemester(filename):
     return ""
 
 def getVersion(filename):
-    tags = re.findall('v([A-Z]|\d+)', filename) #vA, v3, etc.
-    for tag in tags:
-        if (tag is not None):
-            return tag
+    tag = re.search('v([A-Z]|\d+)', filename, re.IGNORECASE) #vA, v3, etc. OR Test 1a, Test 1b
+    if (tag is not None):
+        version = tag.groups()[0].upper()
+        return version
+        
+    tag = re.search('(test|quiz|midterm|assignment|lecture|note|chapter|chap|ch|module|week)(\s|_)?(\d{1,2})([A-Z]?)($|\s|_)', filename, re.IGNORECASE)
+    if (tag is not None):
+        version = tag.groups()[3].upper()
+        return version
+
     return ""
 
-def getDriveMetaData():
-    file_id = '0BwwA4oUTeiV1UVNwOHItT0xfa2M'
-    request = drive_service.files().get_media(fileId=file_id)
-    fh = io.BytesIO()
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while done is False:
-        status, done = downloader.next_chunk()
-        print "Download %d%%." % int(status.progress() * 100)
-    # TODO: get mimetype
-    # TODO: if drive file, use open office standards
-    return {}
-
-def uploadS3():
-    print 'boom'
+def getVolume(filename):
+    tag = re.search('(test|quiz|midterm|assignment|lecture|note|chapter|chap|ch|module|week)(\s|_)?(\d{1,2})([A-Z]?){0,}($|\s|_)', filename, re.IGNORECASE)
+    if (tag is not None):
+        version = str(int(tag.groups()[2].upper()))
+        return version
+    
+    else:
+        return ""
+    
 
 def parseInput(input):
     output = {}
-
+    
     lineList = re.split("\t", input)
     index = lineList[0]
     text = lineList[4]
@@ -162,7 +160,9 @@ def parseInput(input):
     
     output['semesterId'] = getSemester(text)
 
-    output['version'] = getVersion(text)
+    output['version'] = getVersion(output['description'])
+
+    output['volume'] = getVolume(output['description'])
         
     output['fileID'] = fileID
     
@@ -172,4 +172,4 @@ def writeToFile(outfile, data):
     outfile.write(json.dumps(data))
     outfile.write('\n')
 
-main()
+

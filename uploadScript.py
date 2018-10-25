@@ -5,7 +5,7 @@ with associated data previously parsed and stored in output.txt"""
 import json
 import requests
 
-#TODO: Script to create new course if doesn't exist
+#TODO: Script to create new course if doesn't exist?
 #TODO: Scrape semester, eval number etc in parsing script better.
 
 def main():
@@ -38,9 +38,10 @@ def upload(data):
     type = data["format"] #what is type??? there is also a format param
     format = data["format"]
     Version = data["version"] #TODO: Add versions to parser, look for single digit
+    Volume = data["volume"] #add to the parser. i.e. Test 1 vs. Test 2
     S3OriginalLink = "google blah blah" + data["fileID"]
     _creator = "5b3699ba791da980bbfeafea" #my user ID? what name to I upload it under?
-    _course = data["code"] #TODO: parser needs to be aligned with schema once sorted out
+    _course = data["code"]
     _school = "MCMASTER-UNIVERSITY-HAM-ONT-CAN" #is this correct?
     #TODO: How will the actual file attached if using a POST request
     
