@@ -1,7 +1,5 @@
-{"code": "CHEM 1E03", "description": "Test 1 2008 Solutions", "format": "pdf", "solution": true, "year": "2008", "semesterId": 0, "type": "test", "fileID": "0BxW61uJyyN8TNmJUUHdOWDR5bDQ"}
-{"code": "CHEM 1E03", "description": "Chemistry", "format": "odt", "solution": false, "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1YymqOorsWAMlvRWSFljWDeeOVICF5LN1yDRk0hZjRL0"}
-{"code": "CHEM 1E03", "description": "Test 1 2008", "format": "pdf", "solution": false, "year": "2008", "semesterId": 0, "type": "test", "fileID": "0BxW61uJyyN8TT1EwVzBydnNYYWc"}
-{"code": "ENG 1P03", "description": "Chapter 20 Notes (other)", "format": "docx", "solution": false, "year": "", "semesterId": 0, "type": "note", "fileID": "0BxW61uJyyN8TaV82MWtiZ2JQemM"}
-{"code": "ENG 1P03", "description": "Chapter 17 Notes", "format": "docx", "solution": false, "year": "", "semesterId": 0, "type": "note", "fileID": "0BxW61uJyyN8TRlZXa0E4OFowN0k"}
-{"code": "Econ 1B03", "description": "Test 2 Review 2011 Fall", "format": "ppt", "solution": false, "version": "", "year": "2011", "semesterId": 3, "type": "note", "fileID": "0BxW61uJyyN8TNzdlOTNjMGEtODgzZi00MmFhLWIwN2QtOGZlZWM4MDk4ZGFj"}
+{"code": "CHEM 1E03", "description": "Chap 10 1 Chem", "format": "jpg", "solution": false, "volume": "10", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TN0w2Z09vUUI5YkE"}
+{"code": "CHEM 1E03", "description": "Chemistry", "format": "gdoc", "solution": false, "volume": "", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "1YymqOorsWAMlvRWSFljWDeeOVICF5LN1yDRk0hZjRL0"}
+{"code": "CHEM 1E03", "description": "Chapter 19 & 20", "format": "odt", "solution": false, "volume": "19", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TS3g1V0dwMVhmWEE"}
+{"code": "CHEM 1E03", "description": "Chapter 15 - rules", "format": "jpg", "solution": false, "volume": "15", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TYVQwTXRUWnBxSFE"}
 

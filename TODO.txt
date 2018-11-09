@@ -43,7 +43,8 @@ communoteParse_v2.py
 		if no "." from getFormatAndDesc then calls this to return it's googledoc download type i.e. odt, odp, dos
 			appears there are only odt files anyways.
 		
-		
+	problem with: {"code": "CHEM 1E03", "description": "Chapter 19 & 20", "format": "odt", "solution": false, "volume": "19", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TS3g1V0dwMVhmWEE"}
+	It is a .doc but doesn't have a file extension in the original file name. The parser then labbels it as an odt when it should be labeled as a .doc in the output text file. Only want google docs to be labelled as odt's in the output.txt file.
 	
 	
 	

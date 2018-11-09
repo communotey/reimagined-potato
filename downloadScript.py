@@ -27,13 +27,21 @@ def main():
         fileID = data["fileID"]
         fileDesc = data["description"]
         fileFormat = data["format"]
+        courseCode = data["code"]
 
+        print fileID
+        
+        #Make new folder for course if doesn't exist
+        fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
+        if (not os.path.exists(fileDir)):
+            os.makedirs(fileDir)
+        
         #convert from doc or docx to google doc if needed
         if (fileFormat == 'doc') or (fileFormat == 'docx'):
             GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
             fileID = GDoc['id'] #fileID of new GDoc
             mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.odt' #directory for odt download
+            filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
             isGDoc = True
 
         #TODO: odp download is 90% corrupt even when doing it manually without using the API. Could export as PDF instead maybe. or just keep as ppt
@@ -42,23 +50,23 @@ def main():
             fileID = GDoc['id'] #fileID of new GDoc
             mimeType = 'application/vnd.oasis.opendocument.presentation' #mimeType for odp 
             #mimeType = 'application/pdf'
-            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.odp' #directory for odt download
+            filePath = fileDir + '/' + fileDesc + '.odp' #directory for odt download
             isGDoc = True
             
         #else if already a google doc (doesn't need conversion)
-        elif (fileFormat == 'odt'):
+        elif (fileFormat == 'gdoc'):
             mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.' + fileFormat
+            filePath = fileDir + '/' + fileDesc + '.odt'
             isGDoc = True
-        
-        #else it is already a google doc or a different file type    
+            
+            
         else:
-            fileName = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + fileDesc + '.' + fileFormat
+            filePath = fileDir + '/' + fileDesc + '.' + fileFormat
             mimeType = None #can you pass None for mime type if don't want to specify it?
             isGDoc = False
 
         #Download File
-        exportFile(service, fileID, fileName, mimeType, isGDoc)   
+        exportFile(service, fileID, filePath, mimeType, isGDoc)   
 
 
 

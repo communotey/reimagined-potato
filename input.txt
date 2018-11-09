@@ -1125,7 +1125,6 @@
 1125	MATLS		1M03	Tutorial Slides 01.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TMWQ1OTJhYTYtMmZjMy00NGZjLWI0NzgtOWE4MmIzMGJhMzRl
 1126	Physics		1E03	review Okons notes .ppt		https://docs.google.com/open?id=0BxW61uJyyN8TdnhVYXpzWnJDZWM
 1127	Physics		1E03	Robert Mascitelli's Physics 1e03 Notes.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TOVRIRUQyc0lVbXc
-1128	Physics		1E03	physstudygame.rar		https://docs.google.com/open?id=0BxW61uJyyN8TMDk1SEIxdUdIV1k
 1129	Physics		1E03	physics to read.txt		https://docs.google.com/open?id=0BxW61uJyyN8TN0MzWHJ4LUpVSTQ
 1130	Physics		1E03	Physics Test 2 2012 Review Session Notes.doc		https://docs.google.com/open?id=0BxW61uJyyN8TR1U1anBoaGRSd2lxWFE4b0R5RWJEQQ
 1131	Physics		1E03	lecture20 McKay.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TR1RRdllqdjBnazQ
@@ -2217,7 +2216,6 @@
 2220	Biochem		2EE3	exam Review Questions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TMDV6WXhZWmdvZ28
 2221	Biochem		2EE3	Sample_Questions_Feb_2006.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TLUVoX2d4anhreDg
 2222	Biochem		2EE3	the ten comandments (more practice).pdf		https://docs.google.com/open?id=0BxW61uJyyN8TUDVZRTk3dUp1WHc
-2223	Biochem		2EE3	Amino Acids.exe		https://docs.google.com/open?id=0BxW61uJyyN8TMWV4czA5cFFjc0k
 2224	ECON		2B03	Chapter 8.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TdV9xNGhLdm1IN1E
 2225	ECON		2B03	Chapter 9.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TbnQwakMwQ3NvRHM
 2226	ECON		2B03	Chapter 6.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TYTlVUGg3U3JHZTg
@@ -2983,7 +2981,7 @@
 2986	Chem-Eng		3E04	5- Numerical Differentiation1.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TYzQ2VGZIMkFuZk0
 2987	MATH		3J04	math3j04test22000.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TeFhPRUQ0UHhwTms
 2988	MATH		3J04	math3j04test12000.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TR0JjdlZPRzd4M0U
-2989	MATLS		4R03	MATLS 4R03 Test Solutions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TWFA2clB5c1lSSHc&utm_source=https%3A//sites.google.com/site/macengfifteen&utm_medium=email&utm_campaign=Mac+Eng+15
+2989	MATLS		4R03	MATLS 4R03 Test Solutions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TWFA2clB5c1lSSHc
 2990	SFWR ENG		4O03	SFWR ENG 4O03 Exam 2012.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TMmhJSGt4QW9iRzQ
 2991	Commerce		4BG3	Commerce 4BG3 - April 2010 (Labour Studies 4C03).pdf		https://docs.google.com/open?id=0BxW61uJyyN8TcGQ5QWYzMmx2TzQ
 2992	Commerce		4BD3	Commerce 4BD3 - April 2011.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TWUVmcVg2eFdwR1U
@@ -3081,7 +3079,6 @@
 3084	SFWR-ENG		4E03	Test 1 2012 Sample.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TMmI0bURZSHVjcXc
 3085	SFWR-ENG		4E03	Test 1 2011 Solutions.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TQzk2RFZTbEJCZGs
 3086	SFWR-ENG		4E03	Test 1 2011 Sample.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TZ1FkMFVvd1BKNUE
-3087	SFWR-ENG		4E03	Exam 2011.pdf		https://docs.google.com/open?id=0BxW61uJyyN8TVzItRGFnUk9zLTg
 3088	ECON		4B03	quiz8questions.docx		https://docs.google.com/open?id=0BxW61uJyyN8TZXVCbHk2c0tObzg
 3089	ECON		4B03	quiz7questions.docx		https://docs.google.com/open?id=0BxW61uJyyN8TcE1lR29UeHdGbWM
 3090	ECON		4B03	quiz6questions.docx		https://docs.google.com/open?id=0BxW61uJyyN8TNUJ4OUFhNWNkRjQ

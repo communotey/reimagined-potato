@@ -4,57 +4,90 @@
 
 import re
 import json
-import urllib
+import urllib2
+
+import requests
+from google.oauth2 import service_account
+from apiclient import errors
+from apiclient.discovery import build
+
 
 def main():
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
+    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    service = build('drive', 'v2', credentials=credentials)
+
     f = open('input.txt', 'r')
     #f = open('shortTextFile.txt', 'r')
     content = f.readlines()
     
     outfile = open('output.txt', 'w')
+    outfileDNE = open('DNE.txt', 'w')
+    outfileDenied = open('denied.txt', 'w')
     
     for line in content:
         line = line.rstrip() #remove trailing whitespace
-        data = parseInput(line)
+        data = parseInput(service, line)
         writeToFile(outfile, data)
+
+        if data['format'] == 'DNE':
+            writeOther(outfileDNE, data)
+        elif data['format'] == 'denied':
+            writeOther(outfileDenied, data)
        
-    outfile.close     
+    outfile.close
+    outfileDNE.close
+    outfileDenied.close     
     print "Done!"
+
+
+def getFormat(service, fileID):
+    try:
+        #use the API to get the file type if it is a FILE not a gdoc
+        file = service.files().get(fileId=fileID).execute()
+        format = file['fileExtension'].lower()
         
-def getFormatAndDesc(filename, fileID):
+        if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
+            format = 'odt'
+
+    except:
+        #send get request to verify exists and hasn't been deleted
+        r = requests.get('https://docs.google.com/open?id=' + fileID)
+        print r.status_code
+        #if 404 status code then DNE
+        if r.status_code == 404:
+            format = "DNE"
+
+        #elif OK then it is either a google doc OR don't have access to it
+        elif r.status_code == 200:
+            gdocString = 'meta property="og:title" content=' #all google docs SHOULD (bit sketchy) have this string in source, while if no access it won't contain this string
+
+            if (gdocString in r.text):
+                format = "gdoc"
+
+            else:
+                format = "denied"
+
+        #if none of these work then we missed a case and should identify it. Flag as UNKNOWN
+        else:
+            format = "UNKNOWN"
+
+    return format
+
+
+def getDescription(filename):
     filenameArr = filename.split('.')
     if (len(filenameArr) > 1): #if had at least one '.' and last part after the last '.' isn't longer than 4 char
-        extension = filenameArr.pop(-1).lower()
+        filenameArr.pop(-1).lower()
         description = '-'.join(filenameArr)
  
     else:
-        extension = scrapeGDocType(fileID) #TODO: there are some .doc files that don't have a '.' in the desc so thinks its a gdoc when its not
         description = filename
         
-    return description, extension
+    return description
+
     
-
-def scrapeGDocType(fileID):
-    page = urllib.urlopen('https://docs.google.com/document/d/' + fileID)
-    html = page.read()
-    
-    odtTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/DocumentObject\")', html)
-    if (odtTag is not None):
-        return "odt"
-
-    odpTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/PresentationObject\")', html)
-    if (odpTag is not None):
-        return "odp"
-
-    odsTag = re.search(r'(itemtype=\"http://schema.org/CreativeWork/SpreadsheetObject\")', html)
-    if (odsTag is not None):
-        return "ods"
-
-    return "unknown"
-        
-    
-    
-
 def getMatType(filename):
     #FindAll to cover straight forward types that have consistent spelling
     typeTagsRaw = re.findall('quiz|tutorial|assignment', filename, re.IGNORECASE)
@@ -101,6 +134,7 @@ def getYear(filename):
     else:
         return ""
 
+
 def getSemester(filename):
     #FindAll to cover straight forward types that have consistent spelling
     tags = re.findall('winter|spring|summer|fall', filename, re.IGNORECASE)
@@ -116,6 +150,7 @@ def getSemester(filename):
             return 3
     return ""
 
+
 def getVersion(filename):
     tag = re.search('v([A-Z]|\d+)', filename, re.IGNORECASE) #vA, v3, etc. OR Test 1a, Test 1b
     if (tag is not None):
@@ -129,6 +164,7 @@ def getVersion(filename):
 
     return ""
 
+
 def getVolume(filename):
     tag = re.search('(test|quiz|midterm|assignment|lecture|note|chapter|chap|ch|module|week)(\s|_)?(\d{1,2})([A-Z]?){0,}($|\s|_)', filename, re.IGNORECASE)
     if (tag is not None):
@@ -139,7 +175,7 @@ def getVolume(filename):
         return ""
     
 
-def parseInput(input):
+def parseInput(service, input):
     output = {}
     
     lineList = re.split("\t", input)
@@ -149,7 +185,9 @@ def parseInput(input):
     
     output['code'] = lineList[1] + ' ' + lineList[3]
 
-    output['description'], output['format'] = getFormatAndDesc(text, fileID)
+    output['description'] = getDescription(text)
+
+    output['format'] = getFormat(service, fileID)
 
     output['solution'] = getSol(text)
     
@@ -165,11 +203,23 @@ def parseInput(input):
     output['volume'] = getVolume(output['description'])
         
     output['fileID'] = fileID
+
+    print index + " : " + output['format']
     
     return output
+
 
 def writeToFile(outfile, data):
     outfile.write(json.dumps(data))
     outfile.write('\n')
 
+def writeOther(outfile, data):
+    shortData = {'code':data['code'],
+                'title':data['description'],
+                'format':data['format'],
+                'link':'https://docs.google.com/open?id=' + data['fileID']
+                }
 
+    outfile.write(json.dumps(shortData))
+    outfile.write('\n')
+main()
