@@ -11,63 +11,72 @@ from apiclient.http import MediaIoBaseDownload
 
 
 def main():
-    SCOPES = ['https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    service = build('drive', 'v2', credentials=credentials)
+	SCOPES = ['https://www.googleapis.com/auth/drive']
+	SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
+	credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+	service = build('drive', 'v2', credentials=credentials)
 
-    #open and read output.txt
-    #f = open('output.txt','r')
-    dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
-    content = dataFile.readlines()
+	#open and read output.txt
+	dataFile = open('output.txt','r')
+	downloadLog = open('downloadLog.txt', 'w')
+	#dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
+	content = dataFile.readlines()
 
-    #for each line read data from output file
-    for line in content:
-        data = json.loads(line)
-        fileID = data["fileID"]
-        fileDesc = data["description"]
-        fileFormat = data["format"]
-        courseCode = data["code"]
+	#for each line read data from output file
+	count = 0
+	for line in content:
+		count += 1
+		data = json.loads(line)
+		fileID = data["fileID"]
+		fileDesc = data["description"]
+		fileFormat = data["format"]
+		courseCode = data["code"]
 
-        print fileID
-        
-        #Make new folder for course if doesn't exist
-        fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
-        if (not os.path.exists(fileDir)):
-            os.makedirs(fileDir)
-        
-        #convert from doc or docx to google doc if needed
-        if (fileFormat == 'doc') or (fileFormat == 'docx'):
-            GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
-            fileID = GDoc['id'] #fileID of new GDoc
-            mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-            filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
-            isGDoc = True
+		#print fileID
 
-        #TODO: odp download is 90% corrupt even when doing it manually without using the API. Could export as PDF instead maybe. or just keep as ppt
-        elif (fileFormat == 'ppt'):
-            GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
-            fileID = GDoc['id'] #fileID of new GDoc
-            mimeType = 'application/vnd.oasis.opendocument.presentation' #mimeType for odp 
-            #mimeType = 'application/pdf'
-            filePath = fileDir + '/' + fileDesc + '.odp' #directory for odt download
-            isGDoc = True
-            
-        #else if already a google doc (doesn't need conversion)
-        elif (fileFormat == 'gdoc'):
-            mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-            filePath = fileDir + '/' + fileDesc + '.odt'
-            isGDoc = True
-            
-            
-        else:
-            filePath = fileDir + '/' + fileDesc + '.' + fileFormat
-            mimeType = None #can you pass None for mime type if don't want to specify it?
-            isGDoc = False
+		validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
+		#maybe write to another file to keep note of which were not downloaded
 
-        #Download File
-        exportFile(service, fileID, filePath, mimeType, isGDoc)   
+		#download every 50th file for testing
+		if count % 50 == 0:
+			print
+			print fileID
+			if (fileFormat in validFormats):
 
+			#Make new folder for course if doesn't exist
+				fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
+				if (not os.path.exists(fileDir)):
+					os.makedirs(fileDir)
+		        
+		        #convert from doc or docx to google doc if needed
+				if (fileFormat == 'doc') or (fileFormat == 'docx'):
+					GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
+					fileID = GDoc['id'] #fileID of new GDoc
+					mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+					filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
+					isGDoc = True
+
+				#else if already a google doc (doesn't need conversion)
+				elif (fileFormat == 'gdoc'):
+					mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+					filePath = fileDir + '/' + fileDesc + '.odt'
+					isGDoc = True
+		            
+				#for remaining files: pdf and odt    
+				else:
+					filePath = fileDir + '/' + fileDesc + '.' + fileFormat
+					mimeType = None
+					isGDoc = False
+
+				#Download File
+				exportFile(service, fileID, filePath, mimeType, isGDoc)
+				downloadLog.write(fileID + '\n')   
+
+			else:
+				print "Skipping download. File format: " + fileFormat
+
+	downloadLog.close
+	print "End of download script."
 
 
 def convertFile(service, origin_file_id, copy_title):
@@ -91,9 +100,6 @@ def exportFile(service, fileID, fileName, mimeType, isGDoc):
     while done is False:
         status, done = downloader.next_chunk()
         print "Download %d%%." % int(status.progress() * 100)
-
-
-
 
 
 main()
