@@ -32,15 +32,15 @@ def upload(data):
 
     #adjust the format to what it has been downloaded as
     if data["format"] == "gdoc" or data["format"][0:3] == "doc":
-        format = "odt"
+        file_format = "odt"
     else:
-        format = data["format"]
+        file_format = data["format"]
 
     dateCreated = data["year"] #need to adjust this to be a date, not just year
     description = data["description"]
     semesterID = data["semesterId"]
     solution = data["solution"]
-    type = data["format"] #what is type??? there is also a format param
+    file_type = data["format"] #what is type??? there is also a format param
     Version = data["version"] #TODO: Add versions to parser, look for single digit
     Volume = data["volume"] #add to the parser. i.e. Test 1 vs. Test 2
     S3OriginalLink = "https://docs.google.com/open?id=" + data["fileID"]
@@ -50,7 +50,7 @@ def upload(data):
     #TODO: How will the actual file attached if using a POST request
 
     #/downloads/MATH 1ZA3/Test 2.pdf
-    filePath = 'downloads/' + _course + '/' + description + '.' + format
+    filePath = 'downloads/' + _course + '/' + description + '.' + file_format
     file = {'file':open(filePath, 'rb')}
 
  
@@ -58,7 +58,7 @@ def upload(data):
             "dateCreated": dateCreated,
             "semesterID": semesterID,
             "solution": solution,
-            "type": type,
+            "type": file_type,
             "Version": Version,
             "Volume": Volume,
             "S3OriginalLink": S3OriginalLink,
@@ -79,8 +79,8 @@ def upload(data):
     print "request headers: "
     print r.request.headers
     print
-    print "request body: "
-    print r.request.body
+    #print "request body: "
+    #print r.request.body
     print 
 
 
