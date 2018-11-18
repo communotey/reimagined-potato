@@ -47,11 +47,13 @@ def getFormat(service, fileID):
         #use the API to get the file type if it is a FILE not a gdoc
         file = service.files().get(fileId=fileID).execute()
         format = file['fileExtension'].lower()
+        uploadDate = file['createdDate'] #RFC 3339 format
         
         if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
             format = 'odt'
 
     except:
+        uploadDate = ""
         #send get request to verify exists and hasn't been deleted
         r = requests.get('https://docs.google.com/open?id=' + fileID)
         print r.status_code
@@ -73,7 +75,7 @@ def getFormat(service, fileID):
         else:
             format = "UNKNOWN"
 
-    return format
+    return format, uploadDate
 
 
 def getDescription(filename):
@@ -187,7 +189,8 @@ def parseInput(service, input):
 
     output['description'] = getDescription(text)
 
-    output['format'] = getFormat(service, fileID)
+    output['format'] = getFormat(service, fileID)[0]
+    output['dateCreated'] = getFormat(service, fileID)[1]
 
     output['solution'] = getSol(text)
     

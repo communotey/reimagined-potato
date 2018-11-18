@@ -17,9 +17,9 @@ def main():
 	service = build('drive', 'v2', credentials=credentials)
 
 	#open and read output.txt
-	dataFile = open('output.txt','r')
-	downloadLog = open('downloadLog.txt', 'w')
-	#dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
+	#dataFile = open('output.txt','r')
+	downloadLog = open('downloadLog.txt', 'a')
+	dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
 	content = dataFile.readlines()
 
 	#for each line read data from output file
@@ -38,7 +38,8 @@ def main():
 		#maybe write to another file to keep note of which were not downloaded
 
 		#download every 50th file for testing
-		if count % 50 == 0:
+		#if count % 50 == 0:
+		if True:
 			print
 			print fileID
 			if (fileFormat in validFormats):
