@@ -12,7 +12,7 @@ from apiclient.http import MediaIoBaseDownload
 
 def main():
 	SCOPES = ['https://www.googleapis.com/auth/drive']
-	SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
+	SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json'
 	credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 	service = build('drive', 'v2', credentials=credentials)
 

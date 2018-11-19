@@ -1,1 +1,1 @@
-{"code": "Math 1ZA3", "description": "l`hospital`s rule", "format": "pdf", "solution": false, "dateCreated": "2011-12-05T09:42:10.715Z", "volume": "", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TMDYzZjE2YmQtZDU3ZS00Y2ExLTk2YzAtOTBlNGM4NzIzYTk5"}
+{"code": "Econ 1B03", "description": "Microeconomics-Test-2-Notes", "format": "pdf", "solution": false, "dateCreated": "2015-01-09T23:20:08.958Z", "volume": "", "version": "", "year": "", "semesterId": "", "type": "note", "fileID": "0BxW61uJyyN8TUXpGTTdqLVYxYUk"}

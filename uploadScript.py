@@ -8,15 +8,17 @@ import requests
 #TODO: Script to create new course if doesn't exist?
 #TODO: Scrape semester, eval number etc in parsing script better.
 
+
 def main():
-    #TODO: read userId and jwt from secure file
-    userId = ""
-    jwt = ""
+    creds_file = open("G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\communote_credentials.json", "r")
+    creds = json.loads(creds_file.read())
+    userId = creds["userId"]
+    jwt = creds["jwt"]
 
     #open output.txt
     #f = open("output.txt")
     f = open("outputShort.txt")
-    
+
     #read data file
     content = f.readlines()
 
@@ -42,12 +44,23 @@ def main():
             print "Skipping upload. Format: " + data["format"]
 
 
+
+def encode(code):
+    code = code.lower()
+    code = code.strip()
+    code = code.replace(' ', '-')
+    code = ''.join(code.split())
+    return code
+
+
+encode(" MaTh 1ZA3")
+
 def newCourse(code, userId, jwt):
     reqUrl = "https://api.communote.net/api/course/new"
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-    data = {"contents":{"group":"","name":code.replace("-", " "),"title":code.replace("-", " ")},"jwt":jwt"schoolUrl":"MCMASTER-UNIVERSITY-HAM-ONT-CAN","userId":userId}
+    data = {"contents":{"group":"","name":code.replace("-", " "),"title":code.replace("-", " ")},"jwt":jwt,"schoolUrl":"MCMASTER-UNIVERSITY-HAM-ONT-CAN","userId":userId}
 
 
     r = requests.post(reqUrl, data=json.dumps(data), headers=headers)
@@ -65,7 +78,6 @@ def newCourse(code, userId, jwt):
 def upload(file_data, userId, jwt):   
     #send request to communote api with data 
     reqURL = "https://api.communote.net/api/file/new"
-    #reqURL = "http://httpbin.org/post"
 
     #adjust the format to what it has been downloaded as
     if file_data["format"] == "gdoc" or file_data["format"][0:3] == "doc":
@@ -81,7 +93,6 @@ def upload(file_data, userId, jwt):
     file_type = file_data["format"] #what is type??? there is also a format param
     Version = file_data["version"] #TODO: Add versions to parser, look for single digit
     Volume = file_data["volume"] #add to the parser. i.e. Test 1 vs. Test 2
-    S3OriginalLink = "https://docs.google.com/open?id=" + file_data["fileID"]
     courseUrl = file_data["code"]
     schoolUrl = "MCMASTER-UNIVERSITY-HAM-ONT-CAN" #is this correct?
     #TODO: How will the actual file attached if using a POST request
@@ -100,12 +111,12 @@ def upload(file_data, userId, jwt):
             "Version": Version,
             "Volume": Volume,
             "userId": userId,
-            "courseUrl": courseUrl.replace(" ", "-").lower(),
+            "courseUrl": encode(courseUrl),
             "schoolUrl": schoolUrl,
             "jwt": jwt
-            } 
+            }
     
-
+    print data["courseUrl"]
     r = requests.post(reqURL, data=data, files=file)
 
     print
@@ -119,8 +130,6 @@ def upload(file_data, userId, jwt):
     print r.request.body[:2000]
     print 
     print "==========================================================================================================================="
-    print 
+    print
 
-
-    
 main()
