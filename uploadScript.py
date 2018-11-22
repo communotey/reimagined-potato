@@ -15,9 +15,15 @@ def main():
     userId = creds["userId"]
     jwt = creds["jwt"]
 
+    uploadLog = open('uploads.log', 'r')
+    uploads = uploadLog.read()
+    uploadLog.close()
+    uploadLog = open('uploads.log', 'a')
+
     #open output.txt
     #f = open("output.txt")
     f = open("outputShort.txt")
+
 
     #read data file
     content = f.readlines()
@@ -25,24 +31,35 @@ def main():
     validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
     for line in content:
         data = json.loads(line)
-        if data["format"] in validFormats:
-            #make a new course if it doesn't exist
 
-            reqCourseUrl = "https://api.communote.net/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower()
-            print reqCourseUrl
-            r = requests.get(reqCourseUrl)
+        if data['fileID'] not in uploads:
 
-             # the problem is you get a 200 then redirects to a error page. Look into how to determine if the course exists or not.
-            if r.status_code == 404:
-                print "status code for course: " + str(r.status_code)
-                newCourse(data["code"], userId, jwt)
+            if data["format"] in validFormats:
+                #make a new course if it doesn't exist
+
+                reqCourseUrl = "https://api.communote.net/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower()
+                print reqCourseUrl
+                r = requests.get(reqCourseUrl)
+
+                 # the problem is you get a 200 then redirects to a error page. Look into how to determine if the course exists or not.
+                if r.status_code == 404:
+                    print "status code for course: " + str(r.status_code)
+                    newCourse(data["code"], userId, jwt)
+                else:
+                    print "course exists"
+
+                #call upload(data)
+                response = upload(data, userId, jwt)
+                if response.status_code == 200:
+                    uploadLog.write(data["fileID"] + '\n')
+                else:
+                    print '*'*20 + ' \n' + 'ERROR' + '\n' + '*'*20
+
             else:
-                print "course exists"
-            #call upload(data)
-            upload(data, userId, jwt)
+                print "Skipping upload. Format: " + data["format"]
         else:
-            print "Skipping upload. Format: " + data["format"]
-
+            print "Skipping upload. File already uploaded."
+    uploadLog.close()
 
 
 def encode(code):
@@ -53,7 +70,6 @@ def encode(code):
     return code
 
 
-encode(" MaTh 1ZA3")
 
 def newCourse(code, userId, jwt):
     reqUrl = "https://api.communote.net/api/course/new"
@@ -94,8 +110,9 @@ def upload(file_data, userId, jwt):
     Version = file_data["version"] #TODO: Add versions to parser, look for single digit
     Volume = file_data["volume"] #add to the parser. i.e. Test 1 vs. Test 2
     courseUrl = file_data["code"]
-    schoolUrl = "MCMASTER-UNIVERSITY-HAM-ONT-CAN" #is this correct?
-    #TODO: How will the actual file attached if using a POST request
+    schoolUrl = "MCMASTER-UNIVERSITY-HAM-ONT-CAN"
+
+    semesterId = "0" #TODO: Remove this line and change parser to set as "0" by default
 
     #/downloads/MATH 1ZA3/Test 2.pdf
     fileName = description + '.' + file_format
@@ -122,14 +139,7 @@ def upload(file_data, userId, jwt):
     print
     print "status code: "
     print r.status_code
-    print
-    print "request headers: "
-    print r.request.headers
-    print
-    print "request body: "
-    print r.request.body[:2000]
-    print 
-    print "==========================================================================================================================="
-    print
+
+    return r
 
 main()

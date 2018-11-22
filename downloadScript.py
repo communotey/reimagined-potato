@@ -16,9 +16,15 @@ def main():
 	credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 	service = build('drive', 'v2', credentials=credentials)
 
+	print "Remember to clear downloads.log if doing a fresh download and want all files to be redownloaded."
+	print "If log is cleared, delete the downloaded files too."
+
 	#open and read output.txt
 	#dataFile = open('output.txt','r')
-	downloadLog = open('downloadLog.txt', 'a')
+	downloadLog = open('downloads.log', 'r')
+	downloads = downloadLog.read()
+	downloadLog.close()
+	downloadLog = open('downloads.log', 'a')
 	dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
 	content = dataFile.readlines()
 
@@ -42,40 +48,42 @@ def main():
 		if True:
 			print
 			print fileID
-			if (fileFormat in validFormats):
+			if fileID not in downloads:
+				if (fileFormat in validFormats):
 
-			#Make new folder for course if doesn't exist
-				fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
-				if (not os.path.exists(fileDir)):
-					os.makedirs(fileDir)
-		        
-		        #convert from doc or docx to google doc if needed
-				if (fileFormat == 'doc') or (fileFormat == 'docx'):
-					GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
-					fileID = GDoc['id'] #fileID of new GDoc
-					mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-					filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
-					isGDoc = True
+				#Make new folder for course if doesn't exist
+					fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
+					if (not os.path.exists(fileDir)):
+						os.makedirs(fileDir)
+			        
+			        #convert from doc or docx to google doc if needed
+					if (fileFormat == 'doc') or (fileFormat == 'docx'):
+						GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
+						fileID = GDoc['id'] #fileID of new GDoc
+						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+						filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
+						isGDoc = True
 
-				#else if already a google doc (doesn't need conversion)
-				elif (fileFormat == 'gdoc'):
-					mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-					filePath = fileDir + '/' + fileDesc + '.odt'
-					isGDoc = True
-		            
-				#for remaining files: pdf and odt    
+					#else if already a google doc (doesn't need conversion)
+					elif (fileFormat == 'gdoc'):
+						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+						filePath = fileDir + '/' + fileDesc + '.odt'
+						isGDoc = True
+			            
+					#for remaining files: pdf and odt    
+					else:
+						filePath = fileDir + '/' + fileDesc + '.' + fileFormat
+						mimeType = None
+						isGDoc = False
+
+					#Download File
+					exportFile(service, fileID, filePath, mimeType, isGDoc)
+					downloadLog.write(data["fileID"] + '\n') #writes the fileID of document before conversion  
+
 				else:
-					filePath = fileDir + '/' + fileDesc + '.' + fileFormat
-					mimeType = None
-					isGDoc = False
-
-				#Download File
-				exportFile(service, fileID, filePath, mimeType, isGDoc)
-				downloadLog.write(fileID + '\n')   
-
+					print "Skipping download. File format: " + fileFormat
 			else:
-				print "Skipping download. File format: " + fileFormat
-
+				print "Skipping download. File already downloaded."
 	downloadLog.close
 	print "End of download script."
 

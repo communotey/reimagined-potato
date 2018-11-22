@@ -14,7 +14,7 @@ from apiclient.discovery import build
 
 def main():
     SCOPES = ['https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = 'G:\Documents\Coding\Webscraping\MacEng15\private\service.json'
+    SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json'
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     service = build('drive', 'v2', credentials=credentials)
 
@@ -42,17 +42,21 @@ def main():
     print "Done!"
 
 
-def getFormat(service, fileID):
+def getMetaData(service, fileID):
+    
     try:
         #use the API to get the file type if it is a FILE not a gdoc
         file = service.files().get(fileId=fileID).execute()
         format = file['fileExtension'].lower()
         uploadDate = file['createdDate'] #RFC 3339 format
+        filename = file['title']
         
         if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
             format = 'odt'
 
     except:
+        #if it is a gdoc or there was an error
+        filename = ""
         uploadDate = ""
         #send get request to verify exists and hasn't been deleted
         r = requests.get('https://docs.google.com/open?id=' + fileID)
@@ -75,7 +79,7 @@ def getFormat(service, fileID):
         else:
             format = "UNKNOWN"
 
-    return format, uploadDate
+    return format, uploadDate, filename
 
 
 def getDescription(filename):
@@ -150,9 +154,9 @@ def getSemester(filename):
             return 2
         elif (tag == "fall"):
             return 3
-    return ""
+    return "3" #TODO: Update this is scrape based on the course?
 
-
+#TODO: Update regex to work with v1-SA or vSA or vMC etc.
 def getVersion(filename):
     tag = re.search('v([A-Z]|\d+)', filename, re.IGNORECASE) #vA, v3, etc. OR Test 1a, Test 1b
     if (tag is not None):
@@ -180,6 +184,11 @@ def getVolume(filename):
 def parseInput(service, input):
     output = {}
     
+    #Would need to first scrape the description (file name) from google drive
+    #and use that in most of the functions rather than the whole string of text
+    #change from text to desciption for: getSol, getMatType, getYear, getSemester
+    #keep in mind google docs won't work so if gdoc then use the input.txt file name as the description
+
     lineList = re.split("\t", input)
     index = lineList[0]
     text = lineList[4]
@@ -187,23 +196,30 @@ def parseInput(service, input):
     
     output['code'] = lineList[1] + ' ' + lineList[3]
 
-    output['description'] = getDescription(text)
+    output['format'], output['dateCreated'], filename = getMetaData(service, fileID)
 
-    output['format'] = getFormat(service, fileID)[0]
-    output['dateCreated'] = getFormat(service, fileID)[1]
+    #if got filename from drive api
+    if filename != "":
+        description = getDescription(filename)
 
-    output['solution'] = getSol(text)
+    #else couldn't get filename from drive api
+    else:
+        description = getDescription(text) #change this function to get from api, not input.txt
+
+    output['description'] = description
+        
+    output['solution'] = getSol(description)
     
     # TODO: change tests depending on the type #what does this mean?
-    output['type'] = getMatType(text)
+    output['type'] = getMatType(description)
     
-    output['year'] = getYear(text)
+    output['year'] = getYear(description)
     
-    output['semesterId'] = getSemester(text)
+    output['semesterId'] = getSemester(description)
 
-    output['version'] = getVersion(output['description'])
+    output['version'] = getVersion(description)
 
-    output['volume'] = getVolume(output['description'])
+    output['volume'] = getVolume(description)
         
     output['fileID'] = fileID
 
