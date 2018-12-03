@@ -53,7 +53,7 @@ def main():
                 if response.status_code == 200:
                     uploadLog.write(data["fileID"] + '\n')
                 else:
-                    print '*'*20 + ' \n' + 'ERROR' + '\n' + '*'*20
+                    print '*'*20 + ' \n' + 'ERROR! Status code: ' + str(response.status_code) + '\n' + '*'*20
 
             else:
                 print "Skipping upload. Format: " + data["format"]

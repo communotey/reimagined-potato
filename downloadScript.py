@@ -8,6 +8,7 @@ from google.oauth2 import service_account
 from apiclient import errors
 from apiclient.discovery import build
 from apiclient.http import MediaIoBaseDownload
+import pypandoc
 
 
 def main():
@@ -46,13 +47,13 @@ def main():
 		#download every 50th file for testing
 		#if count % 50 == 0:
 		if True:
-			print
 			print fileID
 			if fileID not in downloads:
 				if (fileFormat in validFormats):
 
-				#Make new folder for course if doesn't exist
+					#Make new folder for course if doesn't exist
 					fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
+
 					if (not os.path.exists(fileDir)):
 						os.makedirs(fileDir)
 			        
@@ -70,7 +71,7 @@ def main():
 						filePath = fileDir + '/' + fileDesc + '.odt'
 						isGDoc = True
 			            
-					#for remaining files: pdf and odt    
+					#for remaining files: pdf and odt and ppt (no google api conversion)    
 					else:
 						filePath = fileDir + '/' + fileDesc + '.' + fileFormat
 						mimeType = None
@@ -78,7 +79,15 @@ def main():
 
 					#Download File
 					exportFile(service, fileID, filePath, mimeType, isGDoc)
-					downloadLog.write(data["fileID"] + '\n') #writes the fileID of document before conversion  
+					downloadLog.write(data["fileID"] + '\n') #writes the fileID of document before conversion
+
+					#*Pandoc can't convert ppt's only pptx so not needed.
+					#If ppt file then use pypandoc to convert it to an odp
+					if fileFormat == 'ppt':
+						#print "file type is ppt. Converting to odp..."
+						pandocConvert(filePath, 'ppt', 'odp')
+
+
 
 				else:
 					print "Skipping download. File format: " + fileFormat
@@ -110,6 +119,10 @@ def exportFile(service, fileID, fileName, mimeType, isGDoc):
         status, done = downloader.next_chunk()
         print "Download %d%%." % int(status.progress() * 100)
 
+
+def pandocConvert(filePath, fileFormat, newFileFormat):
+	convertedFile = pypandoc.convert(filePath, newFileFormat, format=fileFormat)
+	print "Done converting ppt --> odp"
 
 main()
 
