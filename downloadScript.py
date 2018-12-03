@@ -21,12 +21,12 @@ def main():
 	print "If log is cleared, delete the downloaded files too."
 
 	#open and read output.txt
-	#dataFile = open('output.txt','r')
+	dataFile = open('output.txt','r')
+	#dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
 	downloadLog = open('downloads.log', 'r')
 	downloads = downloadLog.read()
 	downloadLog.close()
 	downloadLog = open('downloads.log', 'a')
-	dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
 	content = dataFile.readlines()
 
 	#for each line read data from output file

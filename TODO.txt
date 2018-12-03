@@ -48,4 +48,46 @@ communoteParse_v2.py
 	
 	
 	
+	
+	
+Dec 2nd
+	
+	Problem where uploading docx but sending data in request that it is odt or vice verse? maybe not. could just be that the odt files can't be viewed on site b/c not supported yet?
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 

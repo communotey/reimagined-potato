@@ -1,7 +1,5 @@
 #Spaghetti code by: David Cleave
 
-#*unknowns are actually google docs and odt marked are docs with no "." while i wanted it to be the other way around
-
 import re
 import json
 import urllib2
@@ -11,6 +9,9 @@ from google.oauth2 import service_account
 from apiclient import errors
 from apiclient.discovery import build
 
+from dateutil import parser
+import calendar
+
 
 def main():
     SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -18,8 +19,8 @@ def main():
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     service = build('drive', 'v2', credentials=credentials)
 
-    f = open('input.txt', 'r')
-    #f = open('shortTextFile.txt', 'r')
+    #f = open('input.txt', 'r')
+    f = open('shortTextFile.txt', 'r')
     content = f.readlines()
     
     outfile = open('output.txt', 'w')
@@ -48,7 +49,7 @@ def getMetaData(service, fileID):
         #use the API to get the file type if it is a FILE not a gdoc
         file = service.files().get(fileId=fileID).execute()
         format = file['fileExtension'].lower()
-        uploadDate = file['createdDate'] #RFC 3339 format
+        uploadDate = timestamp(file['createdDate']) #RFC 3339 format
         filename = file['title']
         
         if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
@@ -154,28 +155,25 @@ def getSemester(filename):
             return 2
         elif (tag == "fall"):
             return 3
-    return "3" #TODO: Update this is scrape based on the course?
+    return "3" #TODO: Update this to scrape based on the course if can't be parsed?
 
-#TODO: Update regex to work with v1-SA or vSA or vMC etc.
-def getVersion(filename):
-    tag = re.search('v([A-Z]|\d+)', filename, re.IGNORECASE) #vA, v3, etc. OR Test 1a, Test 1b
-    if (tag is not None):
-        version = tag.groups()[0].upper()
-        return version
-        
-    tag = re.search('(test|quiz|midterm|assignment|lecture|note|chapter|chap|ch|module|week)(\s|_)?(\d{1,2})([A-Z]?)($|\s|_)', filename, re.IGNORECASE)
-    if (tag is not None):
-        version = tag.groups()[3].upper()
-        return version
 
-    return ""
+def getVersion(filename):    
+	lastChunk = filename.split()[-1]
+
+	tag = re.search('(v)([^\s]+)', lastChunk, re.IGNORECASE)
+	if (tag is not None):
+		version = tag.groups()[1].upper()
+		return version
+
+	return ""
 
 
 def getVolume(filename):
     tag = re.search('(test|quiz|midterm|assignment|lecture|note|chapter|chap|ch|module|week)(\s|_)?(\d{1,2})([A-Z]?){0,}($|\s|_)', filename, re.IGNORECASE)
     if (tag is not None):
-        version = str(int(tag.groups()[2].upper()))
-        return version
+        volume = str(int(tag.groups()[2].upper()))
+        return volume
     
     else:
         return ""
@@ -196,7 +194,10 @@ def parseInput(service, input):
     
     output['code'] = lineList[1] + ' ' + lineList[3]
 
-    output['format'], output['dateCreated'], filename = getMetaData(service, fileID)
+    
+
+    output['format'], output['date'], filename = getMetaData(service, fileID)
+
 
     #if got filename from drive api
     if filename != "":
@@ -206,14 +207,18 @@ def parseInput(service, input):
     else:
         description = getDescription(text) #change this function to get from api, not input.txt
 
+    
+    #Set date to the Jan 2nd of the parsed year and converted to a timestamp\
+    output['year'] = getYear(description)
+    if output['year'] != "":
+    	output['date'] = timestamp('Jan 2 ' + output['year'])
+
     output['description'] = description
         
     output['solution'] = getSol(description)
     
     # TODO: change tests depending on the type #what does this mean?
     output['type'] = getMatType(description)
-    
-    output['year'] = getYear(description)
     
     output['semesterId'] = getSemester(description)
 
@@ -241,4 +246,11 @@ def writeOther(outfile, data):
 
     outfile.write(json.dumps(shortData))
     outfile.write('\n')
+
+
+def timestamp(isoDate):
+	timeObj = parser.parse(isoDate)
+	timestamp = calendar.timegm(timeObj.timetuple())
+	return timestamp
+
 main()
