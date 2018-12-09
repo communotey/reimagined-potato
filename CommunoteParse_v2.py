@@ -53,7 +53,7 @@ def getMetaData(service, fileID):
         filename = file['title']
         
         if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
-            format = 'odt'
+            format = 'epub'
 
     except:
         #if it is a gdoc or there was an error
@@ -211,7 +211,7 @@ def parseInput(service, input):
     #Set date to the Jan 2nd of the parsed year and converted to a timestamp\
     output['year'] = getYear(description)
     if output['year'] != "":
-    	output['date'] = timestamp('Jan 2 ' + output['year'])
+    	output['date'] = str(timestamp('Jan 2 ' + output['year']))
 
     output['description'] = description
         

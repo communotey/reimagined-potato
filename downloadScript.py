@@ -8,7 +8,6 @@ from google.oauth2 import service_account
 from apiclient import errors
 from apiclient.discovery import build
 from apiclient.http import MediaIoBaseDownload
-import pypandoc
 
 
 def main():
@@ -21,8 +20,10 @@ def main():
 	print "If log is cleared, delete the downloaded files too."
 
 	#open and read output.txt
+
 	dataFile = open('output.txt','r')
 	#dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
+
 	downloadLog = open('downloads.log', 'r')
 	downloads = downloadLog.read()
 	downloadLog.close()
@@ -41,13 +42,13 @@ def main():
 
 		#print fileID
 
-		validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
+		validFormats = ['doc', 'docx', 'pdf', 'epub', 'gdoc']
 		#maybe write to another file to keep note of which were not downloaded
 
 		#download every 50th file for testing
 		#if count % 50 == 0:
 		if True:
-			print fileID
+			print str(count) + '/' + str(len(content)) + '\t' + fileID
 			if fileID not in downloads:
 				if (fileFormat in validFormats):
 
@@ -61,14 +62,14 @@ def main():
 					if (fileFormat == 'doc') or (fileFormat == 'docx'):
 						GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
 						fileID = GDoc['id'] #fileID of new GDoc
-						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-						filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
+						mimeType = 'application/epub+zip' #mimeType for epub
+						filePath = fileDir + '/' + fileDesc + '.epub' #directory for epub download
 						isGDoc = True
 
 					#else if already a google doc (doesn't need conversion)
 					elif (fileFormat == 'gdoc'):
-						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-						filePath = fileDir + '/' + fileDesc + '.odt'
+						mimeType = 'application/epub+zip' #mimeType for odt
+						filePath = fileDir + '/' + fileDesc + '.epub'
 						isGDoc = True
 			            
 					#for remaining files: pdf and odt and ppt (no google api conversion)    
@@ -80,12 +81,6 @@ def main():
 					#Download File
 					exportFile(service, fileID, filePath, mimeType, isGDoc)
 					downloadLog.write(data["fileID"] + '\n') #writes the fileID of document before conversion
-
-					#*Pandoc can't convert ppt's only pptx so not needed.
-					#If ppt file then use pypandoc to convert it to an odp
-					if fileFormat == 'ppt':
-						#print "file type is ppt. Converting to odp..."
-						pandocConvert(filePath, 'ppt', 'odp')
 
 
 
@@ -120,9 +115,6 @@ def exportFile(service, fileID, fileName, mimeType, isGDoc):
         print "Download %d%%." % int(status.progress() * 100)
 
 
-def pandocConvert(filePath, fileFormat, newFileFormat):
-	convertedFile = pypandoc.convert(filePath, newFileFormat, format=fileFormat)
-	print "Done converting ppt --> odp"
 
 main()
 

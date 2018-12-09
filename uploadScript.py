@@ -26,7 +26,7 @@ def main():
     #read data file
     content = f.readlines()
 
-    validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
+    validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc', 'epub']
     for line in content:
         data = json.loads(line)
         print "\n" + "=====" + data["description"] + "====="
@@ -93,21 +93,22 @@ def upload(file_data, userId, jwt):
 
     #adjust the format to what it has been converted/downloaded as
     if file_data["format"] == "gdoc" or file_data["format"][0:3] == "doc":
-        file_format = "odt"
+        file_format = "epub"
     else:
         file_format = file_data["format"]
 
 	#TODO: Can't get date from gdocs b/c can't use api until granted access. For now will use current date if gdoc
     if file_data["date"] == "":
     	print "time unknown setting as: " + str(time.time())
-    	dateCreated = time.time()
+    	dateCreated = str(time.time())
     else:
-        dateCreated = file_data["date"]
+        dateCreated = str(file_data["date"])
 
     description = file_data["description"]
     semesterId = file_data["semesterId"]
     solution = file_data["solution"]
-    file_type = file_data["format"]
+    file_format = file_data["format"]
+    file_type = file_data["type"]
     Version = file_data["version"] 
     Volume = file_data["volume"]
     courseUrl = file_data["code"]
@@ -125,6 +126,7 @@ def upload(file_data, userId, jwt):
             "dateCreated": dateCreated,
             "semesterId": semesterId,
             "solution": solution,
+            "format": file_format,
             "type": file_type,
             "Version": Version,
             "Volume": Volume,
