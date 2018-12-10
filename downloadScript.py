@@ -12,7 +12,7 @@ from apiclient.http import MediaIoBaseDownload
 
 def main():
 	SCOPES = ['https://www.googleapis.com/auth/drive']
-	SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json'
+	SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #//CHANGE
 	credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 	service = build('drive', 'v2', credentials=credentials)
 
@@ -42,7 +42,8 @@ def main():
 
 		#print fileID
 
-		validFormats = ['doc', 'docx', 'pdf', 'epub', 'gdoc']
+		validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
+
 		#maybe write to another file to keep note of which were not downloaded
 
 		#download every 50th file for testing
@@ -53,28 +54,28 @@ def main():
 				if (fileFormat in validFormats):
 
 					#Make new folder for course if doesn't exist
-					fileDir = os.path.dirname(os.path.abspath(__file__)) + '/downloads/' + courseCode
+					fileDir = os.path.dirname(os.path.abspath(__file__)) + '\\downloads\\' + courseCode
 
 					if (not os.path.exists(fileDir)):
 						os.makedirs(fileDir)
 			        
 			        #convert from doc or docx to google doc if needed
-					if (fileFormat == 'doc') or (fileFormat == 'docx'):
+					if (fileFormat == 'doc'):
 						GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
 						fileID = GDoc['id'] #fileID of new GDoc
-						mimeType = 'application/epub+zip' #mimeType for epub
-						filePath = fileDir + '/' + fileDesc + '.epub' #directory for epub download
+						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+						filePath = fileDir + '\\' + fileDesc + '.odt' #directory for odt download
 						isGDoc = True
 
 					#else if already a google doc (doesn't need conversion)
 					elif (fileFormat == 'gdoc'):
-						mimeType = 'application/epub+zip' #mimeType for odt
-						filePath = fileDir + '/' + fileDesc + '.epub'
+						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
+						filePath = fileDir + '\\' + fileDesc + '.odt'
 						isGDoc = True
 			            
 					#for remaining files: pdf and odt and ppt (no google api conversion)    
 					else:
-						filePath = fileDir + '/' + fileDesc + '.' + fileFormat
+						filePath = fileDir + '\\' + fileDesc + '.' + fileFormat
 						mimeType = None
 						isGDoc = False
 

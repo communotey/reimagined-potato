@@ -8,7 +8,7 @@ import time
 
 
 def main():
-    creds_file = open("G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\communote_credentials.json", "r")
+    creds_file = open("G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\communote_credentials.json", "r") #CHANGE
     creds = json.loads(creds_file.read())
     userId = creds["userId"]
     jwt = creds["jwt"]
@@ -26,7 +26,7 @@ def main():
     #read data file
     content = f.readlines()
 
-    validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc', 'epub']
+    validFormats = ['doc', 'docx', 'pdf', 'odt', 'gdoc']
     for line in content:
         data = json.loads(line)
         print "\n" + "=====" + data["description"] + "====="
@@ -35,7 +35,7 @@ def main():
             if data["format"] in validFormats:
                 #make a new course if it doesn't exist
 
-                reqCourseUrl = "https://api.communote.net/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower()
+                reqCourseUrl = "https://api.communote.net/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower() #CHANGE to local host
                 r = requests.get(reqCourseUrl)
 
                  # the problem is you get a 200 then redirects to a error page. Look into how to determine if the course exists or not.
@@ -68,7 +68,7 @@ def encode(code):
 
 
 def newCourse(code, userId, jwt):
-    reqUrl = "https://api.communote.net/api/course/new"
+    reqUrl = "https://api.communote.net/api/course/new" #CHANGE to local host
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
@@ -89,11 +89,12 @@ def newCourse(code, userId, jwt):
 
 def upload(file_data, userId, jwt):   
     #send request to communote api with data 
-    reqURL = "https://api.communote.net/api/file/new"
+    reqURL = "https://api.communote.net/api/file/new" #CHANGE to local host
 
     #adjust the format to what it has been converted/downloaded as
     if file_data["format"] == "gdoc" or file_data["format"][0:3] == "doc":
-        file_format = "epub"
+        print "setting file_format to odt"
+        file_format = "odt"
     else:
         file_format = file_data["format"]
 
@@ -107,7 +108,6 @@ def upload(file_data, userId, jwt):
     description = file_data["description"]
     semesterId = file_data["semesterId"]
     solution = file_data["solution"]
-    file_format = file_data["format"]
     file_type = file_data["type"]
     Version = file_data["version"] 
     Volume = file_data["volume"]
@@ -115,6 +115,7 @@ def upload(file_data, userId, jwt):
     schoolUrl = "MCMASTER-UNIVERSITY-HAM-ONT-CAN"
 
     semesterId = file_data["semesterId"]
+
 
     #i.e. /downloads/MATH 1ZA3/Test 2.pdf
     fileName = description + '.' + file_format

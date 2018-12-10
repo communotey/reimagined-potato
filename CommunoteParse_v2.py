@@ -15,12 +15,12 @@ import calendar
 
 def main():
     SCOPES = ['https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json'
+    SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #CHANGE
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     service = build('drive', 'v2', credentials=credentials)
 
-    #f = open('input.txt', 'r')
-    f = open('shortTextFile.txt', 'r')
+    f = open('input.txt', 'r')
+    #f = open('shortTextFile.txt', 'r')
     content = f.readlines()
     
     outfile = open('output.txt', 'w')
@@ -53,7 +53,7 @@ def getMetaData(service, fileID):
         filename = file['title']
         
         if (format == ''): #to handle like one case.. may or may not work.. for id = 0BxW61uJyyN8TS3g1V0dwMVhmWEE
-            format = 'epub'
+            format = 'odt'
 
     except:
         #if it is a gdoc or there was an error
@@ -84,6 +84,7 @@ def getMetaData(service, fileID):
 
 
 def getDescription(filename):
+    filename = filename.replace('/', ' ')
     filenameArr = filename.split('.')
     if (len(filenameArr) > 1): #if had at least one '.' and last part after the last '.' isn't longer than 4 char
         filenameArr.pop(-1).lower()
