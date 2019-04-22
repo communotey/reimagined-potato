@@ -11,8 +11,11 @@ from apiclient.http import MediaIoBaseDownload
 
 
 def main():
+	base_path = '/home/ec2-user/environment/reimagined-potato/'
+	
 	SCOPES = ['https://www.googleapis.com/auth/drive']
-	SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #//CHANGE
+	#SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #//CHANGE
+	SERVICE_ACCOUNT_FILE = '/home/ec2-user/environment/reimagined-potato/creds/service.json'
 	credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 	service = build('drive', 'v2', credentials=credentials)
 
@@ -21,13 +24,13 @@ def main():
 
 	#open and read output.txt
 
-	dataFile = open('output.txt','r')
-	#dataFile = open('outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
+	dataFile = open(base_path + 'output.txt','r')
+	#dataFile = open(base_path + 'outputShort.txt','r') #using outputShort cause don't want to download all the files everytime i test it.
 
-	downloadLog = open('downloads.log', 'r')
+	downloadLog = open(base_path + 'downloads.log', 'r')
 	downloads = downloadLog.read()
 	downloadLog.close()
-	downloadLog = open('downloads.log', 'a')
+	downloadLog = open(base_path + 'downloads.log', 'a')
 	content = dataFile.readlines()
 
 	#for each line read data from output file
@@ -54,28 +57,28 @@ def main():
 				if (fileFormat in validFormats):
 
 					#Make new folder for course if doesn't exist
-					fileDir = os.path.dirname(os.path.abspath(__file__)) + '\\downloads\\' + courseCode
+					fileDir = base_path + 'downloads/' + courseCode
 
 					if (not os.path.exists(fileDir)):
 						os.makedirs(fileDir)
 			        
 			        #convert from doc or docx to google doc if needed
-					if (fileFormat == 'doc'):
+					if (fileFormat[0:3] == 'doc'):
 						GDoc = convertFile(service, fileID, fileDesc) #convert to GDoc
 						fileID = GDoc['id'] #fileID of new GDoc
 						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-						filePath = fileDir + '\\' + fileDesc + '.odt' #directory for odt download
+						filePath = fileDir + '/' + fileDesc + '.odt' #directory for odt download
 						isGDoc = True
 
 					#else if already a google doc (doesn't need conversion)
 					elif (fileFormat == 'gdoc'):
 						mimeType = 'application/vnd.oasis.opendocument.text' #mimeType for odt
-						filePath = fileDir + '\\' + fileDesc + '.odt'
+						filePath = fileDir + '/' + fileDesc + '.odt'
 						isGDoc = True
 			            
 					#for remaining files: pdf and odt and ppt (no google api conversion)    
 					else:
-						filePath = fileDir + '\\' + fileDesc + '.' + fileFormat
+						filePath = fileDir + '/' + fileDesc + '.' + fileFormat
 						mimeType = None
 						isGDoc = False
 

@@ -14,18 +14,20 @@ import calendar
 
 
 def main():
+    base_path = '/home/ec2-user/environment/reimagined-potato/'
     SCOPES = ['https://www.googleapis.com/auth/drive']
-    SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #CHANGE
+    #SERVICE_ACCOUNT_FILE = 'G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\service.json' #CHANGE
+    SERVICE_ACCOUNT_FILE = '/home/ec2-user/environment/reimagined-potato/creds/service.json'
     credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
     service = build('drive', 'v2', credentials=credentials)
 
-    f = open('input.txt', 'r')
-    #f = open('shortTextFile.txt', 'r')
+    f = open(base_path + 'input.txt', 'r')
+    #f = open(base_path + 'shortTextFile.txt', 'r')
     content = f.readlines()
     
-    outfile = open('output.txt', 'w')
-    outfileDNE = open('DNE.txt', 'w')
-    outfileDenied = open('denied.txt', 'w')
+    outfile = open(base_path + 'output.txt', 'w')
+    outfileDNE = open(base_path + 'DNE.txt', 'w')
+    outfileDenied = open(base_path + 'denied.txt', 'w')
     
     for line in content:
         line = line.rstrip() #remove trailing whitespace

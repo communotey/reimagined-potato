@@ -6,21 +6,23 @@ import json
 import requests
 import time
 
-
+base_path = '/home/ec2-user/environment/reimagined-potato/'
 def main():
-    creds_file = open("G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\communote_credentials.json", "r") #CHANGE
+    
+    #creds_file = open("G:\\Documents\\Coding\\Webscraping\\MacEng15\\private\\creds\\communote_credentials.json", "r") #CHANGE
+    creds_file = open("/home/ec2-user/environment/reimagined-potato/creds/communote_credentials.json", "r")
     creds = json.loads(creds_file.read())
     userId = creds["userId"]
     jwt = creds["jwt"]
 
-    uploadLog = open('uploads.log', 'r')
+    uploadLog = open(base_path + 'uploads.log', 'r')
     uploads = uploadLog.read()
     uploadLog.close()
-    uploadLog = open('uploads.log', 'a')
+    uploadLog = open(base_path + 'uploads.log', 'a')
 
     #open output.txt
-    f = open("output.txt")
-    #f = open("outputShort.txt")
+    f = open(base_path + "output.txt")
+    #f = open(base_path + "outputShort.txt")
 
 
     #read data file
@@ -35,8 +37,9 @@ def main():
             if data["format"] in validFormats:
                 #make a new course if it doesn't exist
 
-                reqCourseUrl = "https://api.communote.net/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower() #CHANGE to local host
+                reqCourseUrl = "http://localhost:8080/api/course?urlId=MCMASTER-UNIVERSITY-HAM-ONT-CAN&code=" + data["code"].replace(" ", "-").lower() #CHANGE to local host
                 r = requests.get(reqCourseUrl)
+                print(r.status_code)
 
                  # the problem is you get a 200 then redirects to a error page. Look into how to determine if the course exists or not.
                 if r.status_code == 404:
@@ -68,7 +71,8 @@ def encode(code):
 
 
 def newCourse(code, userId, jwt):
-    reqUrl = "https://api.communote.net/api/course/new" #CHANGE to local host
+    print("new course: " + code)
+    reqUrl = "http://localhost:8080/api/course/new" #CHANGE to local host
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
@@ -89,7 +93,7 @@ def newCourse(code, userId, jwt):
 
 def upload(file_data, userId, jwt):   
     #send request to communote api with data 
-    reqURL = "https://api.communote.net/api/file/new" #CHANGE to local host
+    reqURL = "http://localhost:8080/api/file/new" #CHANGE to local host
 
     #adjust the format to what it has been converted/downloaded as
     if file_data["format"] == "gdoc" or file_data["format"][0:3] == "doc":
@@ -120,7 +124,7 @@ def upload(file_data, userId, jwt):
     #i.e. /downloads/MATH 1ZA3/Test 2.pdf
     fileName = description + '.' + file_format
     filePath = 'downloads/' + courseUrl + '/'
-    file = {'file-to-upload':open(filePath + fileName, 'rb')}
+    file = {'file-to-upload':open(base_path + filePath + fileName, 'rb')}
 
  
     data = {"description": description,
