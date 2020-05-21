@@ -1,5 +1,14 @@
 # reimagined-potato
 
+## Recommended Setup
+
+* Python 3.7
+* Conda for communote virtualenv
+* pip3 for the rest
+  * Jupiter notebook
+
+## TODO
+
 communoteParse_v2.py
 	change the name of script to something less confusing such as parse.py
 	parse version (single digit after a v, sometimes A or B versions)
