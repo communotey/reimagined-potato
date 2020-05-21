@@ -1,0 +1,309 @@
+Anthropology 1A03
+Arts & Science 1A06
+Arts & Science 3CF3
+Bio 1A03
+Bio 3U03
+Bio 3Y03
+Bio 4U03
+Biochem 2EE3
+Biochem 4N03
+Biochem 4S03
+Biochem 3C03
+Biochem 3G03
+Biology 3SS3
+Biology 4E03
+CHEM 1A03
+CHEM 1E03
+CHEM 3D03
+CHEM 3I03
+CHEM ENG 3P04
+CLASSICS 1M03
+CMST 3AA3E
+CMST 3D03
+CMST 3E03
+CMST 3G03
+CMST 3Y03
+COMP SCI 2CS3
+COMP ENG 2DI4
+COMP ENG 2SH4
+COMP ENG 3SK3
+Chem 1AA3
+Chem 1R03
+Chem 2E03
+Chem 2OA3
+Chem 2OB3
+Chem 2PB3
+Chem 3BB3
+Chem 4B03
+Chem Eng 2F04
+Chem Eng 3M04
+Chem Eng 4C03
+Chem Eng 4T03
+Chem Eng 3E04
+Chem Eng 3G04
+Chemistry 2PD3
+Civil Engineering 3A03
+Civil Engineering 3C03
+Civil Engineering 3R03
+Civil Engineering 4G03
+Civil Engineering 2E03
+Civil Engineering 2O04
+Classics 1M03
+Commerce 2BC3
+Commerce 2FA3
+Commerce 4BC3
+Commerce 4BD3
+Commerce 4BG3
+Commerce 4FH3
+Commerce 4SA3
+Communication Studies 2E03
+Comp Sci 1BA3
+Comp Sci 3MI3
+Comp Sci 3IS3
+Comparative Literature 3RR3
+Computer Science 3MI3
+Cultural Studies & Critical Theory 3A03
+Dynamics 2Q04
+ECON 2B03
+ECON 2P03
+ECON 4B03
+Electrical Engineering 2FH3
+Electrical Engineering 3BA3
+Electrical Engineering 3BB3
+Electrical Engineering 3EJ4
+Electrical Engineering 3FK4
+Electrical Engineering 3K04
+Electrical Engineering 3PI4
+Electrical Engineering 3TP4
+Electrical Engineering 3TQ4
+Electrical Engineering 3TR4
+Electrical Engineering 4BD4
+Electrical Engineering 4EM3
+Electrical Engineering 2CI5
+Electrical Engineering 1C03
+ENG 1D04
+ENG 1P03
+ENG 2B03
+ENG 2MM3
+ENG 3N03
+ENG PHYS 2E04
+ENG PHYS 2H03
+ENGTECH 1PR3
+EP 2S03
+EP 3D03
+EP 3F04
+EP 3X03
+Earth Envir Sci 3E03
+Earth Envir Sci 3K03
+Earth Envir Sci 3V03
+Earth Envir Sci 4T03
+Earth Envir Sci 4Z03
+Earth Sciences 1G03
+Earth Sciences 2K03
+Economics 1B03
+Economics 1BB3
+Economics 2K03
+Economics 4G03
+Economics 4G3
+Electrical Engineering 2EI5
+Electrodynamics 2A04
+Eng 4H03
+Eng 4J03
+Eng Phys 4NE3
+Engineering Physics 4Z03
+English 1AA3
+English 1C06
+English 2C03E
+English 2G06
+English 2G06E
+English 2H06E
+English 3A03
+English 3H03
+English 3J03
+English 3JJ3
+Enviromental Science 1G03
+Enviromental Science 3E03
+Enviromental Science 3E03
+French 1A06
+French 1Z06
+French 2B03
+French 2F03
+French 2M06
+French 3AA3
+French 3KK3
+French 4I03
+French 4MM3
+Geography 1HA3
+Geography 1HB3
+Geography 2E03
+Geography 2K03
+Geography 3K03
+Geography 3V03
+Geography 3Z03
+Geography 4G03
+Geography 4HZ3
+Geography 4T03
+Geography 3UG3
+Geography 3UR3
+Geography 4UH3
+HISTORY 2A03
+Health and Aging 1BB3
+History 2A03E
+History 2AA3
+History 2MM3E
+History 2TT3
+History 2UV3
+History 3G03
+History 3SA3
+History 3W03
+History 3WW3
+Italian 3ZZ3
+Kinesiology 2G03
+Kinesiology 4B03E
+Kinesiology 4SS3E
+Labour Studies 1C03E
+Labour Studies 3E03
+Labour Studies 3F03
+Labour Studies 4C03
+Labour Studies 4C03E
+Labour Studies 1A03
+Linguistics 2E03
+Linguistics 2GE3
+Linguistics 3M03
+Linguistics 3X03
+MATH 1LS3
+MATH 3J04
+MATLS 1M03
+MATLS 2D03
+MATLS 3A03
+MATLS 3C03
+MATLS 3F03
+MATLS 3J03
+MATLS 3M03
+MATLS 3Q03
+MATLS 3T04
+MATLS 4C03
+MATLS 4F03
+MATLS 4I03
+MATLS 4R03
+MECH ENG 2B03
+MECH ENG 4H03
+MECHATRON 3TA4
+MECHATRON 3TB4
+Materials 4I03
+Math 1B03
+Math 1ZA3
+Math 1ZB3
+Math 1ZC3
+Math 2T03
+Math 2Z03
+Math 2ZZ3
+Math 3CY3
+Math 3DC3
+Math 3I03
+Math 3N03
+Math 3QC03
+Math 3U03
+Math 4K03
+Mech Eng 2W04
+Mech Eng 3R03
+Mech Eng 4S03
+Med Phys 4B03
+Med Phys 4U03
+Med Phys 2A03
+Medical Radiation Sciences 3Y03
+Molecular Biology 3Y03
+MultiMedia 1A03
+MultiMedia 2G03
+Multimedia 2G03
+Music 1A03
+Music 1CC3
+Music 2Z03
+Music 3CT3
+Music 3H03
+Music 3U03
+Origins 2FF3
+PSYCH 1X03
+Peace Studies 2AA3
+Peace Studies 2F03E
+Peace Studies 2UV3
+Peace Studies 3A03
+Peace Studies 3AA3E
+Philosophy 1C03
+Philosophy 1E03
+Philosophy 2B03
+Philosophy 2C06
+Philosophy 2X03
+Philosophy 3A06
+Philosophy 3E03
+Philosophy 3I03
+Philosophy 3M03
+Philosophy 3Q03
+Philosophy 3VV3
+Philosophy 3o03
+Physics 1B03
+Physics 1BB3
+Physics 1D03
+Physics 1E03
+Physics 2B04
+Physics 2B06
+Physics 2C03
+Physics 3BA3
+Physics 3C03
+Physics 3K03
+Physics 4B03
+Physics 4F03
+Political Science 2J03
+Political Science 2XX3E
+Political Science 3BB3
+Political Science 3Y03
+Political Science 4NN3
+Political Science 4O03
+Political Science 4O06
+Political Science 4QQ3
+Religious Studies 2EE3
+Religious Studies 2HH3
+Religious Studies 2Q03
+Religious Studies 3K03
+Religious Studies 3R03E
+Russian 1Z03
+Russian 1ZZ3
+SFWR ENG 4F03
+SFWR ENG 4J03
+SFWR ENG 4O03
+SFWR ENG 2AA4
+SFWR ENG 2C03
+SFWR ENG 2FA3
+SFWR ENG 2MX3
+SFWR ENG 2S03
+SFWR ENG 3A04
+SFWR ENG 3BB4
+SFWR ENG 3DX4
+SFWR ENG 3F03
+SFWR ENG 3GA3
+SFWR ENG 3I03
+SFWR ENG 3K04
+SFWR ENG 3RA3
+SFWR ENG 3SH3
+SFWR ENG 3X03
+SFWR ENG 4AA4
+SFWR ENG 4E03
+Sample Econ 2P03
+Science 2A03
+Science 2K03
+Med Phys 2A03
+Social Sciences 2MR3
+Sociology 2E06E
+Statics 2P04
+Statistics 2MB3
+Statistics 3A03
+Stats 2B03
+Stats 2MB3
+Stats 3DD3
+Stats 3Y03
+THTRFLM 1T03
+Women's Studies 1AA3
+Women's Studies 3GG3
+Women's Studies 3G03
+Women's Studies 3H03
+Women's Studies 3I03
